@@ -1,3 +1,5 @@
+import Leaderboard from "./pages/leaderboardPage/leaderboard";
+
 function App() {
   return (
     <div>
