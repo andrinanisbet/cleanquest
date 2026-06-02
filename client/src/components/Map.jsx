@@ -31,29 +31,44 @@ export default function App() {
   const handleMapClick = (latlng) => {
     const newMarker = {
       geocode: [latlng.lat, latlng.lng],
-      popUp: "The spot needs a clean up!",
+      popUp: "This spot needs a clean up!",
     };
 
     setCustomMarkers([...customMarkers, newMarker]);
   };
 
   return (
-    <MapContainer
-      center={[48.8566, 2.3522]}
-      zoom={13}
-      style={{ height: "500px", width: "500px" }}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <MapClickHandler onMapClick={handleMapClick} />
+    // The map component
+    <div>
+      <MapContainer
+        center={[51.7457, -2.2178]}
+        zoom={13}
+        style={{ height: "500px", width: "500px" }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <MapClickHandler onMapClick={handleMapClick} />
 
-      {customMarkers.map((marker, index) => (
-        <Marker key={index} position={marker.geocode} icon={customIcon}>
-          <Popup>{marker.popUp}</Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+        {customMarkers.map((marker, index) => (
+          <Marker key={index} position={marker.geocode} icon={customIcon}>
+            <Popup>{marker.popUp}</Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+      // Litter hotspot list
+      <div style={{ marginTop: "20px" }}>
+        <h3>Litter hotspots</h3>
+        <ol>
+          {customMarkers.map((marker, index) => (
+            <li key={index}>
+              Latitude: {marker.geocode[0].toFixed(4)}, Longitude:{" "}
+              {marker.geocode[1].toFixed(4)}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
   );
 }
