@@ -1,43 +1,45 @@
-import { useState } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { Icon } from "leaflet";
 
-function MapClickHandler({ onMapClick }) {
-  useMapEvents({
-    click(event) {
-      onMapClick(event.latlng);
+export default function App() {
+  //markers
+
+  const markers = [
+    {
+      geocode: [48.86, 2.3522],
+      popUp: "Hello I am pop up 1",
     },
+    {
+      geocode: [48.87, 2.3522],
+      popUp: "Hello I am pop up 2",
+    },
+    {
+      geocode: [48.85, 2.3522],
+      popUp: "Hello I am pop up 3",
+    },
+  ];
+
+  const customIcon = new Icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/5847/5847891.png",
+    iconSize: [38, 38],
   });
-
-  return null;
-}
-
-function Map() {
-  const [markerPosition, setMarkerPosition] = useState(null);
 
   return (
     <MapContainer
-      center={[53.4808, -2.2426]}
+      center={[48.8566, 2.3522]}
       zoom={13}
-      style={{
-        height: "80vh",
-        width: "100%",
-      }}
+      style={{ height: "500px", width: "500px" }}
     >
       <TileLayer
-        attribution="&copy; OpenStreetMap contributors"
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-
-      <MapClickHandler
-        onMapClick={(position) => {
-          console.log(position);
-          setMarkerPosition(position);
-        }}
-      />
-
-      {markerPosition && <Marker position={markerPosition} />}
+      {markers.map((marker, index) => (
+        <Marker key={index} position={marker.geocode} icon={customIcon}>
+          <Popup>{marker.popUp}</Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
 }
-
-export default Map;
