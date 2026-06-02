@@ -1,9 +1,6 @@
+import MapPage from "./pages/mapPage/mapPage";
 function App() {
-  return (
-    <div>
-      <h1>CleanQuest</h1>
-    </div>
-  );
+  return <MapPage />;
 }
 
 export default App;
