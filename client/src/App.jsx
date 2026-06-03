@@ -1,3 +1,4 @@
+import MapPage from "./pages/mapPage/mapPage";
 import Leaderboard from "./pages/leaderboardPage/leaderboard";
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,7 @@ function App() {
       <h1>{message}</h1>
     </div>
   );
+  return <MapPage />;
 }
 
 export default App;
