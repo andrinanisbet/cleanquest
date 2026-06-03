@@ -21,3 +21,9 @@ Hi, my name is Tasha and I will be working on the leaderboard page of this appli
 Sarah Hull:
 
 Hi, my name is Sarah, and I will be working on the homepage and profile page of this application. I spend most of my free time outdoors, walking, running, and gardening. I also love art and enjoy painting whenever I can.
+
+>
+
+Caroline Karanja:
+
+Hi, my name is Caroline Karanja and i will be working on the map page of this application. In my spare time i like colouring, watching movies, puzzles and going to the gym. I love adventures especially exploring new countries and different cuisines. Lately i have been learning how to swim and so far loving it.
