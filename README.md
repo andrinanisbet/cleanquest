@@ -27,3 +27,8 @@ Hi, my name is Sarah, and I will be working on the homepage and profile page of 
 Caroline Karanja:
 
 Hi, my name is Caroline Karanja and i will be working on the map page of this application. In my spare time i like colouring, watching movies, puzzles and going to the gym. I love adventures especially exploring new countries and different cuisines. Lately i have been learning how to swim and so far loving it.
+
+>
+Andrina Nisbet:
+
+Hi, my name is Andrina and I will be working on the event creation page of this application. In my spare time I enjoy hiking, running, strength training, knitting and exploring the outdoors with my dog, Timmy. I also love travelling and experiencing different cultures around the world.
