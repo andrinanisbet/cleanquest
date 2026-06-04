@@ -1,81 +1,34 @@
-// imports, useState to store data,useEffect to run when page loads, map
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Map from "../../components/Map";
 
-//the page that contains it all
 function MapPage() {
-  //hotspots state aka list of markers
   const [hotspots, setHotspots] = useState([]);
-  // focus of map
-  const [mapCenter, setMapCenter] = useState([53.48, -2.24]);
+  const [mapCenter] = useState([53.48, -2.24]);
+  const navigate = useNavigate();
 
-  async function handleSearch(location) {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${location}`,
-    );
-
-    const data = await res.json();
-
-    if (data.length > 0) {
-      const lat = parseFloat(data[0].lat);
-      const lng = parseFloat(data[0].lon);
-
-      setMapCenter([lat, lng]);
-    }
-  }
-
-  // load hotspots
   useEffect(() => {
     fetch("http://localhost:3001/api/hotspots")
       .then((res) => res.json())
-      .then((data) => setHotspots(data))
-      .catch((err) => console.error("Fetch error:", err));
+      .then((data) => setHotspots(data));
   }, []);
 
-  // create hotspot on click
-  async function handleMapClick(e) {
+  function handleMapClick(e) {
     const { lat, lng } = e.latlng;
 
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
-    );
-
-    const data = await res.json();
-
-    const address = data.display_name || "Unknown location";
-
-    const response = await fetch("http://localhost:3001/api/hotspots", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        lat: Number(lat),
-        lng: Number(lng),
-        description: address,
-        status: "Not cleaned",
-        address: address,
-      }),
-    })
-      .then((res) => res.json())
-      .then((newSpot) => {
-        console.log("new hotspot:", newSpot);
-
-        setHotspots((prev) => [...prev, newSpot]);
-      })
-      .catch((err) => console.error("POST error:", err));
+    navigate("/create-hotspot", {
+      state: { lat, lng },
+    });
   }
-  // mark as cleaned function
+
   function markCleaned(id) {
     fetch(`http://localhost:3001/api/hotspots/${id}/clean`, {
       method: "PUT",
-    })
-      .then(() => {
-        setHotspots((prev) =>
-          prev.map((h) => (h.id === id ? { ...h, status: "cleaned" } : h)),
-        );
-      })
-      .catch((err) => console.error("PUT error:", err));
+    }).then(() => {
+      setHotspots((prev) =>
+        prev.map((h) => (h.id === id ? { ...h, status: "cleaned" } : h)),
+      );
+    });
   }
 
   return (
@@ -88,21 +41,8 @@ function MapPage() {
         onClean={markCleaned}
         center={mapCenter}
       />
-
-      <div style={{ marginTop: "20x" }}>
-        <h2> Litter Hotspots</h2>
-        {hotspots.length === 0 && <p> No hotspots yet</p>}
-
-        <ul>
-          {hotspots.map((spot) => (
-            <li key={spot.id}>
-              <strong>{spot.address}</strong>
-              {spot.status === "cleaned" ? "Cleaned" : " Needs clean up"}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 }
+
 export default MapPage;
