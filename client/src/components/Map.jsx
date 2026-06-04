@@ -1,82 +1,68 @@
-import "leaflet/dist/leaflet.css";
+// imports from leaflet
 import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
+  MapContainer, //map box
+  TileLayer, // background map tiles
+  Marker, // the pins
+  Popup, // pop up when clicked
+  useMapEvents, // listens for clicks on map
 } from "react-leaflet";
-import { Icon } from "leaflet";
-import { useState } from "react";
+import "leaflet/dist/leaflet.css"; // deafault map styling
 
+//  handles map clicks
 function MapClickHandler({ onMapClick }) {
   useMapEvents({
     click(e) {
-      onMapClick(e.latlng);
+      onMapClick(e);
     },
   });
+
   return null;
 }
-
-export default function App() {
-  const [customMarkers, setCustomMarkers] = useState([]);
-
-  const customIcon = new Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/5847/5847891.png",
-    iconSize: [38, 38],
-  });
-
-  const getAddress = async (lat, lng) => {
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
-    );
-    const data = await response.json();
-    return data.display_name;
-  };
-
-  const handleMapClick = async (latlng) => {
-    const address = await getAddress(latlng.lat, latlng.lng);
-
-    const newMarker = {
-      geocode: [latlng.lat, latlng.lng],
-      address: address,
-      popUp: "This spot needs a clean up!",
-    };
-
-    setCustomMarkers([...customMarkers, newMarker]);
-  };
-
+//main component
+function Map({ hotspots, onMapClick, onClean, center }) {
+  console.log("hotspots recieved:", hotspots);
   return (
-    <div>
+    <div style={{ position: "relative", zIndex: 1 }}>
       <MapContainer
-        center={[51.7457, -2.2178]}
+        center={center}
         zoom={13}
-        style={{ height: "500px", width: "500px" }}
+        style={{ height: "80vh", width: "100%" }}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <MapClickHandler onMapClick={handleMapClick} />
-
-        {customMarkers.map((marker, index) => (
-          <Marker key={index} position={marker.geocode} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-
-      <div style={{ marginTop: "20px" }}>
-        <h3>Litter hotspots</h3>
-        <ul>
-          {customMarkers.map((pos, index) => (
-            <li key={index}>
-              <strong> {pos.address}</strong>
-              <br />
-            </li>
+        // map image layer
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        //connect click to backend
+        <MapClickHandler onMapClick={onMapClick} />
+        // filter to only show unclean valid markers
+        {hotspots
+          .filter(
+            (spot) =>
+              spot.lat !== undefined &&
+              spot.lng !== undefined &&
+              spot.status !== "cleaned",
+          )
+          // loops through hotspots and creates pin for each
+          .map((spot) => (
+            <Marker key={spot.id} position={[spot.lat, spot.lng]}>
+              <Popup>
+                <div>
+                  <h3>{spot.description}</h3>
+                  <p>
+                    Status:{" "}
+                    {spot.status === "cleaned" ? "✅ Cleaned" : "🟡 Uncleaned"}
+                  </p>
+                  // cleaned button
+                  {spot.status !== "cleaned" && (
+                    <button onClick={() => onClean(spot.id)}>
+                      Mark as cleaned
+                    </button>
+                  )}
+                </div>
+              </Popup>
+            </Marker>
           ))}
-        </ul>
-      </div>
+      </MapContainer>
     </div>
   );
 }
+
+export default Map;
