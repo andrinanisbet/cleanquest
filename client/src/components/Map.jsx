@@ -1,4 +1,3 @@
-//import all the tools needed
 import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
@@ -10,11 +9,10 @@ import {
 import { Icon } from "leaflet";
 import { useState } from "react";
 
-// helper to listen for clicks
 function MapClickHandler({ onMapClick }) {
   useMapEvents({
     click(e) {
-      onMapClick(e.latlng); // send coodinates to app
+      onMapClick(e.latlng);
     },
   });
   return null;
@@ -28,9 +26,20 @@ export default function App() {
     iconSize: [38, 38],
   });
 
-  const handleMapClick = (latlng) => {
+  const getAddress = async (lat, lng) => {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
+    );
+    const data = await response.json();
+    return data.display_name;
+  };
+
+  const handleMapClick = async (latlng) => {
+    const address = await getAddress(latlng.lat, latlng.lng);
+
     const newMarker = {
       geocode: [latlng.lat, latlng.lng],
+      address: address,
       popUp: "This spot needs a clean up!",
     };
 
@@ -38,7 +47,6 @@ export default function App() {
   };
 
   return (
-    // The map component
     <div>
       <MapContainer
         center={[51.7457, -2.2178]}
@@ -57,17 +65,17 @@ export default function App() {
           </Marker>
         ))}
       </MapContainer>
-      // Litter hotspot list
+
       <div style={{ marginTop: "20px" }}>
         <h3>Litter hotspots</h3>
-        <ol>
-          {customMarkers.map((marker, index) => (
+        <ul>
+          {customMarkers.map((pos, index) => (
             <li key={index}>
-              Latitude: {marker.geocode[0].toFixed(4)}, Longitude:{" "}
-              {marker.geocode[1].toFixed(4)}
+              <strong> {pos.address}</strong>
+              <br />
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </div>
   );
