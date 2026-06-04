@@ -45,12 +45,12 @@ function Map({ hotspots, onMapClick, onClean, center }) {
             <Marker key={spot.id} position={[spot.lat, spot.lng]}>
               <Popup>
                 <div>
-                  <h3>{spot.description}</h3>
+                  <h3>{spot.address}</h3>
                   <p>
                     Status:{" "}
                     {spot.status === "cleaned" ? "✅ Cleaned" : "🟡 Uncleaned"}
                   </p>
-                  // cleaned button
+
                   {spot.status !== "cleaned" && (
                     <button onClick={() => onClean(spot.id)}>
                       Mark as cleaned

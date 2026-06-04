@@ -54,21 +54,15 @@ app.get("/leaderboard", (req, res) => {
 app.post("/api/hotspots", (req, res) => {
   console.log("Received", req.body);
 
-  const { lat, lng, description, status } = req.body;
+  const { lat, lng, description, status, address } = req.body;
 
   const sql = `
-    INSERT INTO hotspots (lat, lng, description, status)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO hotspots (lat, lng, description,status, address)
+    VALUES (?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [lat, lng, description, status], (err, result) => {
-    if (err) {
-      console.log("sql error");
-      console.log(err); //
-      return res.status(500).json(err);
-    }
-
-    console.log("success", result);
+  db.query(sql, [lat, lng, description, status, address], (err, result) => {
+    if (err) return res.status(500).json(err);
 
     res.json({
       id: result.insertId,
@@ -76,6 +70,7 @@ app.post("/api/hotspots", (req, res) => {
       lng,
       description,
       status,
+      address,
     });
   });
 });

@@ -33,10 +33,18 @@ function MapPage() {
   }, []);
 
   // create hotspot on click
-  function handleMapClick(e) {
+  async function handleMapClick(e) {
     const { lat, lng } = e.latlng;
 
-    fetch("http://localhost:3001/api/hotspots", {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
+    );
+
+    const data = await res.json();
+
+    const address = data.display_name || "Unknown location";
+
+    const response = await fetch("http://localhost:3001/api/hotspots", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,8 +52,9 @@ function MapPage() {
       body: JSON.stringify({
         lat: Number(lat),
         lng: Number(lng),
-        description: "New hotspot",
-        status: "uncleaned",
+        description: address,
+        status: "Not cleaned",
+        address: address,
       }),
     })
       .then((res) => res.json())
@@ -72,13 +81,27 @@ function MapPage() {
   return (
     <div>
       <h1>CleanQuest Map</h1>
-      <br></br>
+
       <Map
         hotspots={hotspots}
         onMapClick={handleMapClick}
         onClean={markCleaned}
         center={mapCenter}
       />
+
+      <div style={{ marginTop: "20x" }}>
+        <h2> Litter Hotspots</h2>
+        {hotspots.length === 0 && <p> No hotspots yet</p>}
+
+        <ul>
+          {hotspots.map((spot) => (
+            <li key={spot.id}>
+              <strong>{spot.address}</strong>
+              {spot.status === "cleaned" ? "Cleaned" : " Needs clean up"}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
