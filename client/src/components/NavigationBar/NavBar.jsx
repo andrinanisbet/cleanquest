@@ -5,11 +5,11 @@ export default function NavigationBar() {
     return (
         <nav className={styles.navbar}>
             <NavLink to= "/" className={({ isActive }) => isActive ?
-               'active-link': ''}>Home</NavLink>
+               styles.activeLink: ''}>Home</NavLink>
             <NavLink to="/mapPage" className={({ isActive }) => isActive ?
-                'active-link': ''}>Map</NavLink>
+                styles.activeLink: ''}>Map</NavLink>
             <NavLink to="/leaderboardPage" className={({ isActive }) => isActive ?
-                'active-link': ''}>Leaderboard</NavLink>
+                styles.activeLink: ''}>Leaderboard</NavLink>
         </nav>
     );
 }
