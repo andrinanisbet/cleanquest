@@ -3,7 +3,7 @@ import styles from "./Navbar.module.css";
 
 export default function NavigationBar() {
     return (
-       <nav style={{ display: 'flex', gap: '1rem' }}>
+        <nav className={styles.navbar}>
             <NavLink to= "/" className={({ isActive }) => isActive ?
                'active-link': ''}>Home</NavLink>
             <NavLink to="/mapPage" className={({ isActive }) => isActive ?
