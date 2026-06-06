@@ -6,9 +6,9 @@ export default function NavigationBar() {
         <nav className={styles.navbar}>
             <NavLink to= "/" className={({ isActive }) => isActive ?
                styles.activeLink: ''}>Home</NavLink>
-            <NavLink to="/mapPage" className={({ isActive }) => isActive ?
+            <NavLink to="/map" className={({ isActive }) => isActive ?
                 styles.activeLink: ''}>Map</NavLink>
-            <NavLink to="/leaderboardPage" className={({ isActive }) => isActive ?
+            <NavLink to="/leaderboard" className={({ isActive }) => isActive ?
                 styles.activeLink: ''}>Leaderboard</NavLink>
         </nav>
     );

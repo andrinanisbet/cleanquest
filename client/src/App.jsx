@@ -2,7 +2,7 @@ import MapPage from "./pages/mapPage/mapPage";
 import Leaderboard from "./pages/leaderboardPage/leaderboard";
 import { useEffect, useState } from "react";
 
-// import main pages (home, map, leaderboard for navbar)
+// import for navbar
 import {Routes, Route} from 'react-router-dom';
 import Home from './pages/homePage/homePage';
 import Map from './pages/mapPage/mapPage';
@@ -22,8 +22,8 @@ function App() {
       <NavigationBar/>
     <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/mapPage" element={<Map/>}/>
-        <Route path="/leaderboardPage" element={<Leaderboard/>}/>
+        <Route path="/map" element={<Map/>}/>
+        <Route path="/leaderboard" element={<Leaderboard/>}/>
     </Routes>
       <h1>{message}</h1>
     </div>
