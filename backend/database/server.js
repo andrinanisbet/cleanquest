@@ -12,6 +12,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//auth middleware
+function authMiddleware (req, res, next){
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader){
+    return res.status(401).json({
+      message: "Unauthorized"
+    });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+
+    next();
+  } catch (err) {
+    return res.status(401).json({
+      message: "Invalid token"
+    });
+  }
+}
+
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
@@ -33,6 +57,7 @@ app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello from backend" });
 });
 
+//Sign up route
 app.post("/api/auth/signup", async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -68,7 +93,8 @@ app.post("/api/auth/signup", async (req, res) => {
     });
 });
 
-app.post("/api/auth/login",async (req, res) => {
+//Login route
+app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -90,7 +116,7 @@ app.post("/api/auth/login",async (req, res) => {
       });
     }
 
-    if(results.length === 0){
+    if (results.length === 0){
       return res.status(401).json({
         message: "Invalid credentials"
       });
@@ -128,8 +154,37 @@ app.post("/api/auth/login",async (req, res) => {
       }
     });
 
-  })
-})
+  });
+});
+
+//Protected current user route
+app.get("/api/auth/me", authMiddleware, (req, res) => {
+  const sql = `
+    SELECT user_id, username, email, points, streak
+    FROM users
+    WHERE user_id = ?
+    `;
+
+    db.query(sql, [req.user.user_id], (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          message: "Failed to retrieve user",
+          error: err
+        });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({
+          message: "User not found"
+        });
+      }
+
+      res.json({
+        message: "User profile retrieved",
+        user: results[0]
+      });
+    });
+});
 
 app.get("/leaderboard", (req, res) => {
   const sql = `
