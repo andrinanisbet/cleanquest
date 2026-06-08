@@ -5,7 +5,7 @@ import MapPage from "./pages/mapPage/mapPage";
 import Home from "./pages/homePage/homePage";
 import NavigationBar from "./components/NavigationBar/NavBar";
 import CreateHotspot from "./pages/createHotspotPage/createHotspot";
-import Leaderboard from "./pages/leaderboardPage/leaderboardPage";
+import Leaderboard from "./pages/leaderboardPage/leaderboard";
 
 function App() {
   return (
