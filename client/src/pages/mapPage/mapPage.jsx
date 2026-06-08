@@ -67,7 +67,6 @@ export default function MapPage() {
         }, 2000);
       });
   };
-
   return (
     <>
       {/* clean logged banner */}
@@ -88,7 +87,15 @@ export default function MapPage() {
           {banner}
         </div>
       )}
-
+      <header
+        style={{
+          padding: "16px",
+          background: "#f5f5f5",
+          borderBottom: "1px solid #dd",
+        }}
+      >
+        <h1> Litter Hotspots </h1>
+      </header>
       <MapContainer
         center={[51.75, -2.22]}
         zoom={13}

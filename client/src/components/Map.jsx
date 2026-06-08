@@ -57,7 +57,7 @@ export default function Map({ center }) {
       loadHotspots();
 
       // Show banner
-      setBanner("Clean up logged ✅");
+      setBanner("Clean up logged ");
 
       setTimeout(() => {
         setBanner("");
@@ -65,7 +65,7 @@ export default function Map({ center }) {
     } catch (err) {
       console.error(err);
 
-      setBanner("Failed to clean hotspot ❌");
+      setBanner("Failed to clean hotspot");
 
       setTimeout(() => {
         setBanner("");
