@@ -1,7 +1,6 @@
 import "leaflet/dist/leaflet.css";
 
 // import for navbar
-import { Routes, Route } from "react-router-dom";
 import MapPage from "./pages/mapPage/mapPage";
 import Home from "./pages/homePage/homePage";
 import NavigationBar from "./components/NavigationBar/NavBar";
@@ -12,12 +11,9 @@ function App() {
     <div>
       <NavigationBar />
       <Routes>
-        <Route path="/" element={<MapPage />} />
         <Route path="/create-hotspot" element={<CreateHotspot />} />
         <Route path="/" element={<Home />} />
         <Route path="/" element={<MapPage />} />
-        <Route path="/create-hotspot" element={<CreateHotspot />} />
-        <Route path="/map" element={<Map />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </div>
