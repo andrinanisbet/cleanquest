@@ -1,4 +1,3 @@
-import { Routes, Route } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 
 // import for navbar
