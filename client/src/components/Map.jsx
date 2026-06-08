@@ -6,11 +6,15 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { Icon, divIcon, point } from "leaflet";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function MapClickHandler({ onMapClick }) {
+function MapClickHandler({ onSelect }) {
   useMapEvents({
     click(e) {
-      onMapClick(e);
+      console.log("map clicked");
+      onSelect(e.latlng); // THIS is what stores it
     },
   });
 
@@ -18,6 +22,8 @@ function MapClickHandler({ onMapClick }) {
 }
 
 function Map({ hotspots = [], onMapClick, onClean, center }) {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const navigate = useNavigate();
   return (
     <MapContainer
       center={center}
@@ -26,26 +32,26 @@ function Map({ hotspots = [], onMapClick, onClean, center }) {
     >
       <TileLayer url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      <MapClickHandler onMapClick={onMapClick} />
-
-      {hotspots.map((spot) => (
-        <Marker key={spot.id} position={[spot.lat, spot.lng]}>
+      <MapClickHandler onSelect={setSelectedLocation} />
+      {selectedLocation && (
+        <Marker position={selectedLocation}>
           <Popup>
             <div>
-              <h3>{spot.address || spot.description}</h3>
-              <p>{spot.status}</p>
-
-              {spot.status !== "cleaned" && (
-                <button onClick={() => onClean(spot.id)}>
-                  Mark as cleaned
-                </button>
-              )}
+              <p>Create hotspot here?</p>
+              <button
+                onClick={() =>
+                  navigate("/create-hotspot", {
+                    state: selectedLocation,
+                  })
+                }
+              >
+                Continue
+              </button>
             </div>
           </Popup>
         </Marker>
-      ))}
+      )}
     </MapContainer>
   );
 }
-
 export default Map;

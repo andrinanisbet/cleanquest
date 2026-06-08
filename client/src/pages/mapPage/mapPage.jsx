@@ -4,7 +4,7 @@ import Map from "../../components/Map";
 
 function MapPage() {
   const [hotspots, setHotspots] = useState([]);
-  const [mapCenter] = useState([53.48, -2.24]);
+  const [mapCenter] = useState([51.7457, -2.2178]);
   const navigate = useNavigate();
 
   useEffect(() => {
