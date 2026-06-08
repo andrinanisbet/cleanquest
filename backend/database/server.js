@@ -52,36 +52,42 @@ app.get("/leaderboard", (req, res) => {
 
 // Route to add hotspot
 app.post("/api/hotspots", (req, res) => {
-  console.log("Received", req.body);
-
-  const { lat, lng, description, status, address } = req.body;
+  const { username, lat, lng, description, status, address } = req.body;
 
   const sql = `
-    INSERT INTO hotspots (lat, lng, description,status, address)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO hotspots (username,lat, lng, description,status, address)
+    VALUES (?,?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [lat, lng, description, status, address], (err, result) => {
-    if (err) return res.status(500).json(err);
+  db.query(
+    sql,
+    [username, lat, lng, description, status, address],
+    (err, result) => {
+      if (err) return res.status(500).json(err);
 
-    res.json({
-      id: result.insertId,
-      lat,
-      lng,
-      description,
-      status,
-      address,
-    });
-  });
+      res.json({
+        id: result.insertId,
+        lat,
+        lng,
+        description,
+        status,
+        address,
+      });
+    },
+  );
 });
 
 //Route to show hotspots
 
 app.get("/api/hotspots", (req, res) => {
-  db.query("SELECT * FROM hotspots", (err, results) => {
+  const sql = "SELECT * FROM hotspots";
+
+  db.query(sql, (err, results) => {
     if (err) {
+      console.error(err);
       return res.status(500).json(err);
     }
+
     res.json(results);
   });
 });

@@ -1,6 +1,16 @@
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
+.leaflet-popup-content {
+  color: black !important;
+  background: white;
+}
+
+.leaflet-popup-content button {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  padding: 6px 10px;
+  border: 1px solid black;
+  background: white;
+  color: black;
+  cursor: pointer;
 }

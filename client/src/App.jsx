@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import MapPage from "./pages/mapPage/mapPage";
 import CreateHotspot from "./pages/createHotspotPage/createHotspot";
+import "leaflet/dist/leaflet.css";
 
 function App() {
   return (
