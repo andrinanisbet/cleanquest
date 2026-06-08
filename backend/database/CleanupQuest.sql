@@ -212,3 +212,12 @@ FROM user_badges ub
 JOIN users u ON ub.user_id = u.user_id
 JOIN badges b ON ub.badge_id = b.badge_id
 ORDER BY u.username;
+
+CREATE TABLE hotspots (
+id INT AUTO_INCREMENT PRIMARY KEY,
+lat DOUBLE,
+lng DOUBLE,
+description TEXT,
+status VARCHAR (20) DEFAULT 'To be cleaned',
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

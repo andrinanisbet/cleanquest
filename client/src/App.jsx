@@ -1,6 +1,7 @@
+import { Routes, Route } from "react-router-dom";
 import MapPage from "./pages/mapPage/mapPage";
-import Leaderboard from "./pages/leaderboardPage/leaderboard";
-import { useEffect, useState } from "react";
+import CreateHotspot from "./pages/createHotspotPage/createHotspot";
+import "leaflet/dist/leaflet.css";
 
 // import for navbar
 import {Routes, Route} from 'react-router-dom';
@@ -9,15 +10,11 @@ import Map from './pages/mapPage/mapPage';
 import NavigationBar from './components/NavigationBar/NavBar';
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:3001/api/hello")
-    .then((res) => res.json())
-    .then((data) => setMessage(data.message));
-  }, []);
-
   return (
+    <Routes>
+      <Route path="/" element={<MapPage />} />
+      <Route path="/create-hotspot" element={<CreateHotspot />} />
+    </Routes>
     <div>
       <NavigationBar/>
     <Routes>
@@ -29,7 +26,6 @@ function App() {
     </div>
     
   );
-  return <MapPage />;
 }
 
 export default App;

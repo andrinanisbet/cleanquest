@@ -1,4 +1,3 @@
-import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
   TileLayer,
@@ -6,77 +5,161 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import { Icon } from "leaflet";
-import { useState } from "react";
+import "leaflet/dist/leaflet.css";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-function MapClickHandler({ onMapClick }) {
+/* CLick handler */
+function MapClickHandler({ onSelect }) {
   useMapEvents({
     click(e) {
-      onMapClick(e.latlng);
+      onSelect({
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+      });
     },
   });
+
   return null;
 }
 
-export default function App() {
-  const [customMarkers, setCustomMarkers] = useState([]);
+/* Main map */
+export default function Map({ center }) {
+  const [hotspots, setHotspots] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [banner, setBanner] = useState("");
 
-  const customIcon = new Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/5847/5847891.png",
-    iconSize: [38, 38],
-  });
+  const navigate = useNavigate();
 
-  const getAddress = async (lat, lng) => {
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`,
-    );
-    const data = await response.json();
-    return data.display_name;
+  /* Load markers */
+  const loadHotspots = () => {
+    fetch("http://localhost:3001/api/hotspots")
+      .then((res) => res.json())
+      .then((data) => setHotspots(data));
   };
 
-  const handleMapClick = async (latlng) => {
-    const address = await getAddress(latlng.lat, latlng.lng);
+  useEffect(() => {
+    loadHotspots();
+  }, []);
 
-    const newMarker = {
-      geocode: [latlng.lat, latlng.lng],
-      address: address,
-      popUp: "This spot needs a clean up!",
-    };
+  /* Mark as cleaned */
+  const markCleaned = async (id) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/hotspots/${id}/clean`,
+        { method: "PUT" },
+      );
 
-    setCustomMarkers([...customMarkers, newMarker]);
+      if (!res.ok) throw new Error("Request failed");
+
+      await res.json();
+
+      loadHotspots();
+
+      // Show banner
+      setBanner("Clean up logged ");
+
+      setTimeout(() => {
+        setBanner("");
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+
+      setBanner("Failed to clean hotspot");
+
+      setTimeout(() => {
+        setBanner("");
+      }, 2000);
+    }
   };
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      {/* Banner*/}
+      {banner && (
+        <div
+          style={{
+            position: "fixed", // 👈 IMPORTANT CHANGE
+            top: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "black",
+            color: "white",
+            padding: "10px 15px",
+            borderRadius: "6px",
+            zIndex: 999999,
+            fontSize: "14px",
+          }}
+        >
+          {banner}
+        </div>
+      )}
       <MapContainer
-        center={[51.7457, -2.2178]}
+        center={center || [51.75, -2.22]}
         zoom={13}
-        style={{ height: "500px", width: "500px" }}
+        style={{ height: "80vh", width: "100%" }}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="© OpenStreetMap contributors"
         />
-        <MapClickHandler onMapClick={handleMapClick} />
 
-        {customMarkers.map((marker, index) => (
-          <Marker key={index} position={marker.geocode} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
+        {/* Click map*/}
+        <MapClickHandler onSelect={setSelectedLocation} />
+
+        {/* Create hotspot marker*/}
+        {selectedLocation && (
+          <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
+            <Popup>
+              <div style={{ minWidth: "160px", color: "black" }}>
+                <p>Create hotspot here?</p>
+
+                <button
+                  onClick={() =>
+                    navigate("/create-hotspot", {
+                      state: selectedLocation,
+                    })
+                  }
+                >
+                  Create Hotspot
+                </button>
+              </div>
+            </Popup>
           </Marker>
-        ))}
-      </MapContainer>
+        )}
 
-      <div style={{ marginTop: "20px" }}>
-        <h3>Litter hotspots</h3>
-        <ul>
-          {customMarkers.map((pos, index) => (
-            <li key={index}>
-              <strong> {pos.address}</strong>
-              <br />
-            </li>
+        {/* Hotspot*/}
+        {hotspots
+          .filter((spot) => spot.status !== "cleaned")
+          .map((spot) => (
+            <Marker
+              key={spot.id}
+              position={[Number(spot.lat), Number(spot.lng)]}
+            >
+              <Popup>
+                <div style={{ color: "black", minWidth: "160px" }}>
+                  <h3>{spot.username}</h3>
+                  <p>{spot.address}</p>
+                  <p>{spot.description}</p>
+                  <p>Status: {spot.status}</p>
+
+                  <button
+                    onClick={() => markCleaned(spot.id)}
+                    style={{
+                      marginTop: "8px",
+                      padding: "6px 10px",
+                      border: "1px solid black",
+                      background: "white",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Mark as cleaned
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
           ))}
-        </ul>
-      </div>
+      </MapContainer>
     </div>
   );
 }
