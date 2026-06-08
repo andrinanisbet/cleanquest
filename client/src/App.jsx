@@ -2,6 +2,12 @@ import MapPage from "./pages/mapPage/mapPage";
 import Leaderboard from "./pages/leaderboardPage/leaderboard";
 import { useEffect, useState } from "react";
 
+// import for navbar
+import {Routes, Route} from 'react-router-dom';
+import Home from './pages/homePage/homePage';
+import Map from './pages/mapPage/mapPage';
+import NavigationBar from './components/NavigationBar/NavBar';
+
 function App() {
   const [message, setMessage] = useState("");
 
@@ -13,8 +19,15 @@ function App() {
 
   return (
     <div>
+      <NavigationBar/>
+    <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/map" element={<Map/>}/>
+        <Route path="/leaderboard" element={<Leaderboard/>}/>
+    </Routes>
       <h1>{message}</h1>
     </div>
+    
   );
   return <MapPage />;
 }
