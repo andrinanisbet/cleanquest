@@ -27,7 +27,7 @@ function MapClickHandler({ onSelect }) {
 export default function MapPage() {
   const [hotspots, setHotspots] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [banner, setBanner] = useState(""); // ✅ ADDED
+  const [banner, setBanner] = useState(""); //
   const navigate = useNavigate();
 
   /* Load hotspots */
@@ -60,7 +60,7 @@ export default function MapPage() {
       .catch((err) => {
         console.error("Error updating hotspot:", err);
 
-        setBanner("Failed to clean hotspot ❌");
+        setBanner("Failed to clean hotspot");
 
         setTimeout(() => {
           setBanner("");
@@ -165,3 +165,7 @@ export default function MapPage() {
     </>
   );
 }
+
+export default MapPage;
+
+
