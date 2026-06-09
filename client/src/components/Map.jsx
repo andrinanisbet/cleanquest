@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedLocation } from "../store/locationSlice";
 import { useLocation } from "react-router-dom";
 
-/* ---------------- CLICK HANDLER ---------------- */
+/* Click Handler */
 function MapClickHandler() {
   const dispatch = useDispatch();
 
@@ -22,9 +22,6 @@ function MapClickHandler() {
         lat: e.latlng.lat,
         lng: e.latlng.lng,
       };
-
-      console.log("MAP CLICKED:", coords);
-
       dispatch(setSelectedLocation(coords));
     },
   });
@@ -32,12 +29,10 @@ function MapClickHandler() {
   return null;
 }
 
-/* ---------------- MAIN MAP ---------------- */
+/* Main app */
 export default function Map({ center }) {
   const [hotspots, setHotspots] = useState([]);
   const [banner, setBanner] = useState("");
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -45,12 +40,12 @@ export default function Map({ center }) {
     (state) => state.location.selectedLocation,
   );
 
-  /* LOAD HOTSPOTS */
+  /* Load hotspots */
   useEffect(() => {
     fetch("http://localhost:3001/api/hotspots")
       .then((res) => res.json())
       .then((data) => {
-        console.log("HOTSPOTS FROM API:", data);
+        console.log("Hotspots loaded:", data);
         setHotspots(data);
       });
   }, []);
@@ -64,7 +59,7 @@ export default function Map({ center }) {
     }
   }, []);
 
-  /* MARK CLEANED */
+  /* Mark cleaned */
   const markCleaned = async (id) => {
     try {
       const res = await fetch(
@@ -123,7 +118,7 @@ export default function Map({ center }) {
 
         <MapClickHandler />
 
-        {/* TEMP CLICK MARKER */}
+        {/* Temporary click marker */}
         {selectedLocation && (
           <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
             <Popup>
@@ -143,7 +138,7 @@ export default function Map({ center }) {
           </Marker>
         )}
 
-        {/* HOTSPOTS */}
+        {/* Hotspots*/}
         {hotspots
           .filter((spot) => spot.status !== "cleaned")
           .map((spot) => (
