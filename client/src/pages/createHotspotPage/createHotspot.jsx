@@ -1,23 +1,29 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateHotspot() {
-  const location = useLocation();
   const navigate = useNavigate();
 
-  // Get coordinates from map click
-  const { lat, lng } = location.state || {};
+  const selectedLocation = useSelector(
+    (state) => state.location.selectedLocation,
+  );
+
+  const lat = selectedLocation?.lat;
+  const lng = selectedLocation?.lng;
 
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [status, setStatus] = useState("active");
 
-  /* Submit hotspot*/
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log("Submitting hotspot...");
+    if (!lat || !lng) {
+      alert("No map location selected. Go back and click on the map.");
+      return;
+    }
 
     const formData = {
       username,
@@ -39,8 +45,9 @@ export default function CreateHotspot() {
       .then((data) => {
         console.log("Hotspot created:", data);
 
-        // go back to map
-        navigate("/");
+        navigate("/map", {
+          state: { banner: "Hotspot created successfully!" },
+        });
       })
       .catch((err) => {
         console.error("Error creating hotspot:", err);
@@ -51,62 +58,38 @@ export default function CreateHotspot() {
     <div style={{ padding: "20px" }}>
       <h2>Create Hotspot</h2>
 
-      {/* Show location */}
       <p>
         Selected location: {lat}, {lng}
       </p>
 
       <form onSubmit={handleSubmit}>
-        {/* Username */}
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
-        {/* Description */}
-        <div style={{ marginBottom: "10px" }}>
-          <textarea
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
 
-        {/* Address */}
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            placeholder="Address"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          placeholder="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          required
+        />
 
-        {/* Status*/}
-        <div style={{ marginBottom: "10px" }}>
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="active">Not cleaned yet</option>
-            <option value="cleaned">Cleaned</option>
-          </select>
-        </div>
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <option value="active">Not cleaned yet</option>
+          <option value="cleaned">Cleaned</option>
+        </select>
 
-        {/* Submit button*/}
-        <button
-          type="submit"
-          style={{
-            padding: "8px 12px",
-            border: "1px solid black",
-            background: "white",
-            cursor: "pointer",
-          }}
-        >
-          Create Hotspot
-        </button>
+        <button type="submit">Create Hotspot</button>
       </form>
     </div>
   );
