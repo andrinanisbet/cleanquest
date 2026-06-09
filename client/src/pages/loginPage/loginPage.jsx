@@ -1,9 +1,11 @@
-import {useState} from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginMessage, setLoginMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         const response = await fetch("http://localhost:4000/api/auth/login", {
@@ -15,10 +17,11 @@ export default function LoginPage () {
         const data = await response.json()
 
         if (response.status === 200) {
-            localStorage.setItem("token", data.token)
-            setLoginMessage("Login successful!")
+            localStorage.setItem("token", data.token);
+            navigate("/");
+
         } else {
-            setLoginMessage(data.message || "Login failed")
+            setLoginMessage(data.message || "Login failed");
         }
 
     }
