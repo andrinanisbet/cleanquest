@@ -1,38 +1,28 @@
-import MapPage from "./pages/mapPage/mapPage";
-import Leaderboard from "./pages/leaderboardPage/leaderboard";
+
+import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/loginPage/loginPage";
-import { useEffect, useState } from "react";
+import "leaflet/dist/leaflet.css";
 
-// import for navbar
-import {Routes, Route} from 'react-router-dom';
-import Home from './pages/homePage/homePage';
-import Map from './pages/mapPage/mapPage';
-import NavigationBar from './components/NavigationBar/NavBar';
-
+import MapPage from "./pages/mapPage/mapPage";
+import Home from "./pages/homePage/homePage";
+import NavigationBar from "./components/NavigationBar/NavBar";
+import CreateHotspot from "./pages/createHotspotPage/createHotspot";
+import Leaderboard from "./pages/leaderboardPage/leaderboard";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:3001/api/hello")
-    .then((res) => res.json())
-    .then((data) => setMessage(data.message));
-  }, []);
-
   return (
     <div>
-      <NavigationBar/>
-    <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/map" element={<Map/>}/>
-        <Route path="/leaderboard" element={<Leaderboard/>}/>
+      <NavigationBar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/map" element={<MapPage />} />
+        <Route path="/create-hotspot" element={<CreateHotspot />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<LoginPage/>}/>
-    </Routes>
-      <h1>{message}</h1>
+      </Routes>
     </div>
-    
   );
-  return <MapPage />;
 }
 
 export default App;

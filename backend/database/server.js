@@ -204,3 +204,68 @@ app.get("/leaderboard", (req, res) => {
     res.json(results);
   });
 });
+
+// Route to add hotspot
+app.post("/api/hotspots", (req, res) => {
+  const { username, lat, lng, description, status, address } = req.body;
+
+  const sql = `
+    INSERT INTO hotspots (username,lat, lng, description,status, address)
+    VALUES (?,?, ?, ?, ?, ?)
+  `;
+
+  db.query(
+    sql,
+    [username, lat, lng, description, status, address],
+    (err, result) => {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        id: result.insertId,
+        lat,
+        lng,
+        description,
+        status,
+        address,
+      });
+    },
+  );
+});
+
+//Route to show hotspots
+
+app.get("/api/hotspots", (req, res) => {
+  const sql = "SELECT * FROM hotspots";
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json(err);
+    }
+
+    res.json(results);
+  });
+});
+
+// Route to update hotspot
+app.put("/api/hotspots/:id/clean", (req, res) => {
+  const { id } = req.params;
+
+  const sql = `
+    UPDATE hotspots
+    SET status = 'cleaned'
+    WHERE id = ?
+  `;
+
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json(err);
+    }
+
+    res.json({
+      message: "Hotspot marked as cleaned",
+      id,
+    });
+  });
+});
