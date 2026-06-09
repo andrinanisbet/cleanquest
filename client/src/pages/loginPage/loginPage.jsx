@@ -3,6 +3,7 @@ import {useState} from "react";
 export default function LoginPage () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loginMessage, setLoginMessage] = useState("");
 
     const handleLogin = async () => {
         const response = await fetch("http://localhost:4000/api/auth/login", {
@@ -15,6 +16,9 @@ export default function LoginPage () {
 
         if (response.status === 200) {
             localStorage.setItem("token", data.token)
+            setLoginMessage("Login successful!")
+        } else {
+            setLoginMessage(data.message || "Login failed")
         }
 
     }
@@ -43,6 +47,8 @@ export default function LoginPage () {
         <button onClick={handleLogin}>
             Login
         </button>
+
+        <p>{loginMessage}</p>
 
         </div>
 
