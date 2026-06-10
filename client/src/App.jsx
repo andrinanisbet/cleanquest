@@ -1,6 +1,7 @@
 
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/loginPage/loginPage";
+import SignupPage from "./pages/signupPage/signupPage";
 import "leaflet/dist/leaflet.css";
 
 import MapPage from "./pages/mapPage/mapPage";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/create-hotspot" element={<CreateHotspot />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/signup" element={<SignupPage/>}/>
       </Routes>
     </div>
   );

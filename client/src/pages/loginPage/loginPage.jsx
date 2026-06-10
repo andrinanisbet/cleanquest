@@ -46,10 +46,16 @@ export default function LoginPage () {
                 setPassword(event.target.value)
             }}/>
         </label>
-
         <button onClick={handleLogin}>
             Login
         </button>
+        <p>
+            Don't have an account?
+        </p>
+        <button onClick={() => {
+            navigate("/signup")
+        }}>Sign up</button>
+
 
         <p>{loginMessage}</p>
 
