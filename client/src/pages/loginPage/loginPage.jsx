@@ -8,7 +8,7 @@ export default function LoginPage () {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        const response = await fetch("http://localhost:4000/api/auth/login", {
+        const response = await fetch("http://localhost:3001/api/auth/login", {
             method: "POST",
             headers: {"Content-Type": "application/json"}, 
             body: JSON.stringify({email, password})
@@ -46,10 +46,16 @@ export default function LoginPage () {
                 setPassword(event.target.value)
             }}/>
         </label>
-
         <button onClick={handleLogin}>
             Login
         </button>
+        <p>
+            Don't have an account?
+        </p>
+        <button onClick={() => {
+            navigate("/signup")
+        }}>Sign up</button>
+
 
         <p>{loginMessage}</p>
 

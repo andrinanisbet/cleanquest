@@ -4,7 +4,7 @@ function Header() {
     return (
         <header className={styles.Header}>
             <h1 className={styles.title}>CleanQuest Leaderboard 🌍</h1>
-            <p className={styles.subtitle}>Track community cleanup efforts and climb the ranks</p>
+            <p className={styles.subtitle}>Track community cleanup efforts & climb the ranks</p>
             
         </header>
         
