@@ -1,5 +1,3 @@
-//import all the tools needed
-import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
   TileLayer,
@@ -7,67 +5,179 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import { Icon } from "leaflet";
-import { useState } from "react";
+import "leaflet/dist/leaflet.css";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedLocation } from "../store/locationSlice";
+import { useLocation } from "react-router-dom";
 
-// helper to listen for clicks
-function MapClickHandler({ onMapClick }) {
+/* Click Handler */
+function MapClickHandler() {
+  const dispatch = useDispatch();
+
   useMapEvents({
     click(e) {
-      onMapClick(e.latlng); // send coodinates to app
+      const coords = {
+        lat: e.latlng.lat,
+        lng: e.latlng.lng,
+      };
+      dispatch(setSelectedLocation(coords));
     },
   });
+
   return null;
 }
 
-export default function App() {
-  const [customMarkers, setCustomMarkers] = useState([]);
+/* Main app */
+export default function Map({ center }) {
+  const [hotspots, setHotspots] = useState([]);
+  const [banner, setBanner] = useState("");
+  const navigate = useNavigate();
 
-  const customIcon = new Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/5847/5847891.png",
-    iconSize: [38, 38],
-  });
+  const location = useLocation();
+  const selectedLocation = useSelector(
+    (state) => state.location.selectedLocation,
+  );
 
-  const handleMapClick = (latlng) => {
-    const newMarker = {
-      geocode: [latlng.lat, latlng.lng],
-      popUp: "This spot needs a clean up!",
-    };
+  /* Load hotspots */
+  useEffect(() => {
+    fetch("http://localhost:3001/api/hotspots")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Hotspots loaded:", data);
+        setHotspots(data);
+      });
+  }, []);
+  useEffect(() => {
+    if (location.state?.banner) {
+      setBanner(location.state.banner);
 
-    setCustomMarkers([...customMarkers, newMarker]);
+      setTimeout(() => {
+        setBanner("");
+      }, 2000);
+    }
+  }, []);
+
+  /* Mark cleaned */
+  const markCleaned = async (id) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3001/api/hotspots/${id}/clean`,
+        { method: "PUT" },
+      );
+
+      if (!res.ok) throw new Error("Request failed");
+
+      await res.json();
+
+      fetch("http://localhost:3001/api/hotspots")
+        .then((res) => res.json())
+        .then((data) => setHotspots(data));
+
+      setBanner("Clean up logged");
+
+      setTimeout(() => setBanner(""), 2000);
+    } catch (err) {
+      console.error(err);
+      setBanner("Failed to clean hotspot");
+
+      setTimeout(() => setBanner(""), 2000);
+    }
   };
 
   return (
-    // The map component
     <div>
+      {banner && (
+        <div
+          style={{
+            position: "fixed",
+            top: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "black",
+            color: "white",
+            padding: "10px 15px",
+            borderRadius: "6px",
+            zIndex: 999999,
+            fontSize: "14px",
+          }}
+        >
+          {banner}
+        </div>
+      )}
       <MapContainer
-        center={[51.7457, -2.2178]}
+        center={center || [51.75, -2.22]}
         zoom={13}
-        style={{ height: "500px", width: "500px" }}
+        style={{ height: "80vh", width: "100%" }}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="© OpenStreetMap contributors"
         />
-        <MapClickHandler onMapClick={handleMapClick} />
 
-        {customMarkers.map((marker, index) => (
-          <Marker key={index} position={marker.geocode} icon={customIcon}>
-            <Popup>{marker.popUp}</Popup>
+        <MapClickHandler />
+
+        {/* Temporary click marker */}
+        {selectedLocation && (
+          <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
+            <Popup>
+              <div style={{ color: "black" }}>
+                <p>Use this location?</p>
+                <button
+                  onClick={() =>
+                    navigate("/create-hotspot", {
+                      state: selectedLocation,
+                    })
+                  }
+                >
+                  Create Hotspot Here
+                </button>
+              </div>
+            </Popup>
           </Marker>
-        ))}
-      </MapContainer>
-      // Litter hotspot list
-      <div style={{ marginTop: "20px" }}>
-        <h3>Litter hotspots</h3>
-        <ol>
-          {customMarkers.map((marker, index) => (
-            <li key={index}>
-              Latitude: {marker.geocode[0].toFixed(4)}, Longitude:{" "}
-              {marker.geocode[1].toFixed(4)}
-            </li>
+        )}
+
+        {/* Hotspots*/}
+        {hotspots
+          .filter((spot) => spot.status !== "cleaned")
+          .map((spot) => (
+            <Marker
+              key={spot.id}
+              position={[Number(spot.lat), Number(spot.lng)]}
+            >
+              <Popup>
+                <div style={{ color: "black" }}>
+                  <h3>{spot.username}</h3>
+                  <p>{spot.address}</p>
+                  <p>{spot.description}</p>
+
+                  <button onClick={() => markCleaned(spot.id)}>
+                    Mark as cleaned
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
           ))}
-        </ol>
+      </MapContainer>
+
+      <div style={{ padding: "10px" }}>
+        <h3>Active hotspots</h3>
+        <ul>
+          {hotspots
+            .filter((spot) => spot.status !== "cleaned")
+            .map((spot) => (
+              <li key={spot.id}>{spot.address}</li>
+            ))}
+        </ul>
+        <h3>Cleaned hotspots</h3>
+        <ul>
+          {hotspots
+            .filter((spot) => spot.status === "cleaned")
+            .map((spot) => (
+              <li key={spot.id}>{spot.address}</li>
+            ))}
+        </ul>
       </div>
     </div>
   );

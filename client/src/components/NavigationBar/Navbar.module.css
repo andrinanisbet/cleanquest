@@ -1,0 +1,23 @@
+.navbar {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 5px;
+    background-color: rgb(162, 241, 162);
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.activeLink {
+color: green;
+font-weight: bold;
+text-decoration: underline;
+font-size: large;
+}
+
+.navbar a:hover {
+  background-color: rgb(212, 247, 185);
+  color: black;
+  font-size: large;
+}

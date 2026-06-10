@@ -1,10 +1,14 @@
 import Map from "../../components/Map";
-function MapPage() {
+
+export default function MapPage() {
   return (
     <div>
-      <h1>CleanQuest Map</h1>
-      <Map />
+      <h1>Litter Hotspots</h1>
+      <Map center={[51.75, -2.22]} />
     </div>
   );
 }
-export default MapPage;
+
+
+
+
