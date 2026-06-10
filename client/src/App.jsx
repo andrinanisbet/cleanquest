@@ -1,22 +1,18 @@
 import MapPage from "./pages/mapPage/mapPage";
 import Leaderboard from "./pages/leaderboardPage/leaderboard";
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    fetch("http://localhost:3001/api/hello")
-    .then((res) => res.json())
-    .then((data) => setMessage(data.message));
-  }, []);
 
   return (
     <div>
-      <h1>{message}</h1>
+      <Routes>
+    <Route path="/leaderboard" element={<Leaderboard />} />
+    </Routes>
     </div>
   );
-  return <MapPage />;
 }
 
 export default App;
