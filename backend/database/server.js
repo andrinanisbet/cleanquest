@@ -13,12 +13,12 @@ app.use(cors());
 app.use(express.json());
 
 //auth middleware
-function authMiddleware (req, res, next){
+function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader){
+  if (!authHeader) {
     return res.status(401).json({
-      message: "Unauthorized"
+      message: "Unauthorized",
     });
   }
 
@@ -31,7 +31,7 @@ function authMiddleware (req, res, next){
     next();
   } catch (err) {
     return res.status(401).json({
-      message: "Invalid token"
+      message: "Invalid token",
     });
   }
 }
@@ -63,7 +63,7 @@ app.post("/api/auth/signup", async (req, res) => {
 
   if (!username || !email || !password) {
     return res.status(400).json({
-      message: "Username, email and password are required"
+      message: "Username, email and password are required",
     });
   }
 
@@ -73,24 +73,24 @@ app.post("/api/auth/signup", async (req, res) => {
     INSERT INTO users (username, email, password_hash)
     VALUES (?, ?, ?)
     `;
-  
-    db.query(sql, [username, email, hashedPassword], (err, result) => {
-      if (err) {
-        return res.status(500).json({
-          message: "Signup failed",
-          error: err
-        });
-      }
 
-      res.status(201).json({
-        message: "User created successfully",
-        user: {
-          user_id: result.insertId,
-          username,
-          email
-        }
+  db.query(sql, [username, email, hashedPassword], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Signup failed",
+        error: err,
       });
+    }
+
+    res.status(201).json({
+      message: "User created successfully",
+      user: {
+        user_id: result.insertId,
+        username,
+        email,
+      },
     });
+  });
 });
 
 //Login route
@@ -99,7 +99,7 @@ app.post("/api/auth/login", async (req, res) => {
 
   if (!email || !password) {
     return res.status(400).json({
-      message: "Please enter email address and password"
+      message: "Please enter email address and password",
     });
   }
 
@@ -112,36 +112,33 @@ app.post("/api/auth/login", async (req, res) => {
     if (err) {
       return res.status(500).json({
         message: "Login failed",
-        error: err
+        error: err,
       });
     }
 
-    if (results.length === 0){
+    if (results.length === 0) {
       return res.status(401).json({
-        message: "Invalid credentials"
+        message: "Invalid credentials",
       });
     }
 
     const user = results[0];
 
-    const passwordMatch = await bcrypt.compare(
-      password, 
-      user.password_hash
-    );
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
 
     if (!passwordMatch) {
       return res.status(401).json({
-        message: "Invalid credentials"
+        message: "Invalid credentials",
       });
     }
 
     const token = jwt.sign(
       {
         user_id: user.user_id,
-        username: user.username
+        username: user.username,
       },
       process.env.JWT_SECRET,
-      {expiresIn: "1h"}
+      { expiresIn: "1h" },
     );
 
     res.json({
@@ -150,10 +147,9 @@ app.post("/api/auth/login", async (req, res) => {
       user: {
         user_id: user.user_id,
         username: user.username,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
-
   });
 });
 
@@ -165,25 +161,25 @@ app.get("/api/auth/me", authMiddleware, (req, res) => {
     WHERE user_id = ?
     `;
 
-    db.query(sql, [req.user.user_id], (err, results) => {
-      if (err) {
-        return res.status(500).json({
-          message: "Failed to retrieve user",
-          error: err
-        });
-      }
-
-      if (results.length === 0) {
-        return res.status(404).json({
-          message: "User not found"
-        });
-      }
-
-      res.json({
-        message: "User profile retrieved",
-        user: results[0]
+  db.query(sql, [req.user.user_id], (err, results) => {
+    if (err) {
+      return res.status(500).json({
+        message: "Failed to retrieve user",
+        error: err,
       });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      message: "User profile retrieved",
+      user: results[0],
     });
+  });
 });
 
 app.get("/leaderboard", (req, res) => {
@@ -210,8 +206,8 @@ app.post("/api/hotspots", (req, res) => {
   const { username, lat, lng, description, status, address } = req.body;
 
   const sql = `
-    INSERT INTO hotspots (username,lat, lng, description,status, address)
-    VALUES (?,?, ?, ?, ?, ?)
+    INSERT INTO hotspots (username, lat, lng, description, status, address)
+VALUES (?, ?, ?, ?, ?, ?)
   `;
 
   db.query(

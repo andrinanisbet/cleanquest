@@ -8,41 +8,58 @@ import {
 import "leaflet/dist/leaflet.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedLocation } from "../store/locationSlice";
+import { useLocation } from "react-router-dom";
 
-/* CLick handler */
-function MapClickHandler({ onSelect }) {
+/* Click Handler */
+function MapClickHandler() {
+  const dispatch = useDispatch();
+
   useMapEvents({
     click(e) {
-      onSelect({
+      const coords = {
         lat: e.latlng.lat,
         lng: e.latlng.lng,
-      });
+      };
+      dispatch(setSelectedLocation(coords));
     },
   });
 
   return null;
 }
 
-/* Main map */
+/* Main app */
 export default function Map({ center }) {
   const [hotspots, setHotspots] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [banner, setBanner] = useState("");
-
   const navigate = useNavigate();
 
-  /* Load markers */
-  const loadHotspots = () => {
+  const location = useLocation();
+  const selectedLocation = useSelector(
+    (state) => state.location.selectedLocation,
+  );
+
+  /* Load hotspots */
+  useEffect(() => {
     fetch("http://localhost:3001/api/hotspots")
       .then((res) => res.json())
-      .then((data) => setHotspots(data));
-  };
-
+      .then((data) => {
+        console.log("Hotspots loaded:", data);
+        setHotspots(data);
+      });
+  }, []);
   useEffect(() => {
-    loadHotspots();
+    if (location.state?.banner) {
+      setBanner(location.state.banner);
+
+      setTimeout(() => {
+        setBanner("");
+      }, 2000);
+    }
   }, []);
 
-  /* Mark as cleaned */
+  /* Mark cleaned */
   const markCleaned = async (id) => {
     try {
       const res = await fetch(
@@ -54,32 +71,27 @@ export default function Map({ center }) {
 
       await res.json();
 
-      loadHotspots();
+      fetch("http://localhost:3001/api/hotspots")
+        .then((res) => res.json())
+        .then((data) => setHotspots(data));
 
-      // Show banner
-      setBanner("Clean up logged ");
+      setBanner("Clean up logged");
 
-      setTimeout(() => {
-        setBanner("");
-      }, 2000);
+      setTimeout(() => setBanner(""), 2000);
     } catch (err) {
       console.error(err);
-
       setBanner("Failed to clean hotspot");
 
-      setTimeout(() => {
-        setBanner("");
-      }, 2000);
+      setTimeout(() => setBanner(""), 2000);
     }
   };
 
   return (
-    <div style={{ position: "relative" }}>
-      {/* Banner*/}
+    <div>
       {banner && (
         <div
           style={{
-            position: "fixed", // 👈 IMPORTANT CHANGE
+            position: "fixed",
             top: "20px",
             left: "50%",
             transform: "translateX(-50%)",
@@ -104,16 +116,14 @@ export default function Map({ center }) {
           attribution="© OpenStreetMap contributors"
         />
 
-        {/* Click map*/}
-        <MapClickHandler onSelect={setSelectedLocation} />
+        <MapClickHandler />
 
-        {/* Create hotspot marker*/}
+        {/* Temporary click marker */}
         {selectedLocation && (
           <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
             <Popup>
-              <div style={{ minWidth: "160px", color: "black" }}>
-                <p>Create hotspot here?</p>
-
+              <div style={{ color: "black" }}>
+                <p>Use this location?</p>
                 <button
                   onClick={() =>
                     navigate("/create-hotspot", {
@@ -121,14 +131,14 @@ export default function Map({ center }) {
                     })
                   }
                 >
-                  Create Hotspot
+                  Create Hotspot Here
                 </button>
               </div>
             </Popup>
           </Marker>
         )}
 
-        {/* Hotspot*/}
+        {/* Hotspots*/}
         {hotspots
           .filter((spot) => spot.status !== "cleaned")
           .map((spot) => (
@@ -137,22 +147,12 @@ export default function Map({ center }) {
               position={[Number(spot.lat), Number(spot.lng)]}
             >
               <Popup>
-                <div style={{ color: "black", minWidth: "160px" }}>
+                <div style={{ color: "black" }}>
                   <h3>{spot.username}</h3>
                   <p>{spot.address}</p>
                   <p>{spot.description}</p>
-                  <p>Status: {spot.status}</p>
 
-                  <button
-                    onClick={() => markCleaned(spot.id)}
-                    style={{
-                      marginTop: "8px",
-                      padding: "6px 10px",
-                      border: "1px solid black",
-                      background: "white",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <button onClick={() => markCleaned(spot.id)}>
                     Mark as cleaned
                   </button>
                 </div>
@@ -160,6 +160,25 @@ export default function Map({ center }) {
             </Marker>
           ))}
       </MapContainer>
+
+      <div style={{ padding: "10px" }}>
+        <h3>Active hotspots</h3>
+        <ul>
+          {hotspots
+            .filter((spot) => spot.status !== "cleaned")
+            .map((spot) => (
+              <li key={spot.id}>{spot.address}</li>
+            ))}
+        </ul>
+        <h3>Cleaned hotspots</h3>
+        <ul>
+          {hotspots
+            .filter((spot) => spot.status === "cleaned")
+            .map((spot) => (
+              <li key={spot.id}>{spot.address}</li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 }
