@@ -15,13 +15,12 @@ export default function CreateHotspot() {
   const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
-  const [status, setStatus] = useState("active");
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (!lat || !lng) {
-      alert("No map location selected. Go back and click on the map.");
+      alert("No map location selected.");
       return;
     }
 
@@ -31,7 +30,7 @@ export default function CreateHotspot() {
       lng,
       description,
       address,
-      status,
+      status: "active",
     };
 
     fetch("http://localhost:3001/api/hotspots", {
@@ -55,40 +54,44 @@ export default function CreateHotspot() {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "20px",
+        fontSize: "18px",
+      }}
+    >
       <h2>Create Hotspot</h2>
 
-      <p>
-        Selected location: {lat}, {lng}
-      </p>
-
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
         <input
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-
         <textarea
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-
         <input
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           required
         />
-
-        <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="active">Not cleaned yet</option>
-          <option value="cleaned">Cleaned</option>
-        </select>
-
         <button type="submit">Create Hotspot</button>
       </form>
     </div>
