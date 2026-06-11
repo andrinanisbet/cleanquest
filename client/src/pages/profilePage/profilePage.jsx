@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import ProfileHeader from "../../components/profile/ProfileHeader";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../store/authSlice";
 
 export default function ProfilePage (){
+    const dispatch = useDispatch()
+
     const [loggedInUser, setLoggedInUser] = useState(null); 
     const [userMessage, setUserMessage] = useState(""); 
 
@@ -25,13 +29,14 @@ export default function ProfilePage (){
 
         if(response.status === 200){
             setLoggedInUser(data.user);
+            dispatch(setCurrentUser(data.user))
         } else {
             setUserMessage(data.message || "Could not load profile");
         }    
     }; 
     
     getUserProfile();
-    }, [])
+    }, [dispatch])
 
     if (userMessage){
         return <p>{userMessage}</p>
