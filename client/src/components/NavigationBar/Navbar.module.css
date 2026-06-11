@@ -1,23 +1,32 @@
 .navbar {
-    font-family: sans-serif;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    padding: 5px;
-    background-color: rgb(162, 241, 162);
-    border-radius: 20px;
-    margin-bottom: 20px;
+  font-family: "Inter", system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  align-items: flex-start;
+  padding: 5px;
+  background-color: rgb(56, 107, 56);
+  border-radius: 20px;
+  margin-bottom: 20px;
 }
 
 .activeLink {
-color: green;
-font-weight: bold;
-text-decoration: underline;
-font-size: large;
+  color: green;
+  font-weight: bold;
+  font-size: large;
+}
+
+.navbar a {
+  color: white;
+  font-size: large;
+  text-decoration: none;
+  padding: 9px 13px;
+  border-radius: 10px;
+  font-weight: bold;
 }
 
 .navbar a:hover {
-  background-color: rgb(212, 247, 185);
+  background-color: rgb(247, 250, 245);
   color: black;
   font-size: large;
 }

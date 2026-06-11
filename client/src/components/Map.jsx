@@ -95,12 +95,12 @@ export default function Map({ center }) {
             top: "20px",
             left: "50%",
             transform: "translateX(-50%)",
-            background: "black",
+            background: "green",
             color: "white",
             padding: "10px 15px",
             borderRadius: "6px",
             zIndex: 999999,
-            fontSize: "14px",
+            fontSize: "18px",
           }}
         >
           {banner}
@@ -160,25 +160,6 @@ export default function Map({ center }) {
             </Marker>
           ))}
       </MapContainer>
-
-      <div style={{ padding: "10px" }}>
-        <h3>Active hotspots</h3>
-        <ul>
-          {hotspots
-            .filter((spot) => spot.status !== "cleaned")
-            .map((spot) => (
-              <li key={spot.id}>{spot.address}</li>
-            ))}
-        </ul>
-        <h3>Cleaned hotspots</h3>
-        <ul>
-          {hotspots
-            .filter((spot) => spot.status === "cleaned")
-            .map((spot) => (
-              <li key={spot.id}>{spot.address}</li>
-            ))}
-        </ul>
-      </div>
     </div>
   );
 }
