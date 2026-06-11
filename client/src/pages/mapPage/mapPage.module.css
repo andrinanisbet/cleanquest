@@ -1,0 +1,8 @@
+.mapPage {
+  font-family: "Inter", system-ui, sans-serif;
+  color: rgb(14, 13, 13);
+  font-size: large;
+  text-decoration: none;
+  padding: 9px 13px;
+  border-radius: 10px;
+}
