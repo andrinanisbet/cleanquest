@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.css";
+import { useSelector } from "react-redux";
 
 export default function NavigationBar() {
+    const currentUser = useSelector((state) => state.auth.currentUser)
+
   return (
     <nav className={styles.navbar}>
       <NavLink
@@ -28,6 +31,11 @@ export default function NavigationBar() {
       >
         Leaderboard
       </NavLink>
+            {currentUser && (
+      <NavLink to="/profile" className={styles.profileAvatar}> 
+      {currentUser.username.charAt(0).toUpperCase()}
+      </NavLink>
+            )} 
     </nav>
   );
 }

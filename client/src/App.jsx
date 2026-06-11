@@ -9,6 +9,7 @@ import Home from "./pages/homePage/homePage";
 import NavigationBar from "./components/NavigationBar/NavBar";
 import CreateHotspot from "./pages/createHotspotPage/createHotspot";
 import Leaderboard from "./pages/leaderboardPage/leaderboard";
+import ProfilePage from "./pages/profilePage/profilePage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/signup" element={<SignupPage/>}/>
+        <Route path="/profile" element={<ProfilePage/>}/>
       </Routes>
     </div>
   );
