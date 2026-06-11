@@ -156,7 +156,7 @@ app.post("/api/auth/login", async (req, res) => {
 //Protected current user route
 app.get("/api/auth/me", authMiddleware, (req, res) => {
   const sql = `
-    SELECT user_id, username, email, points, streak
+    SELECT user_id, username, email, points, streak, last_cleanup_date, created_at
     FROM users
     WHERE user_id = ?
     `;
