@@ -16,12 +16,7 @@ export default function NavigationBar() {
       >
         Map
       </NavLink>
-      <NavLink
-        to="/create-hotspot"
-        className={({ isActive }) => (isActive ? styles.activeLink : "")}
-      >
-        Create Hotspot
-      </NavLink>
+
       <NavLink
         to="/leaderboard"
         className={({ isActive }) => (isActive ? styles.activeLink : "")}
