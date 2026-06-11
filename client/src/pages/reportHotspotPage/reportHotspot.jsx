@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import "./ReportHotspot.css";
 
-export default function CreateHotspot() {
+export default function ReportHotspot() {
   const navigate = useNavigate();
 
   const selectedLocation = useSelector(
@@ -54,26 +55,16 @@ export default function CreateHotspot() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "20px",
-        fontSize: "18px",
-      }}
-    >
-      <h2>Create Hotspot</h2>
+    <div className="create-hotspot-container"> 
+      <h2>Report a litter hotspot</h2>
+
+      <p>Help your community identify areas that need cleaning</p>
 
       <form
         onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
+        className="create-hotspot-form"
+>
+     
         <input
           placeholder="Username"
           value={username}
@@ -92,7 +83,7 @@ export default function CreateHotspot() {
           onChange={(e) => setAddress(e.target.value)}
           required
         />
-        <button type="submit">Create Hotspot</button>
+        <button type="submit">Report Hotspot</button>
       </form>
     </div>
   );

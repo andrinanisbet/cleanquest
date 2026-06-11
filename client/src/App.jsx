@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 import MapPage from "./pages/mapPage/mapPage";
 import Home from "./pages/homePage/homePage";
 import NavigationBar from "./components/NavigationBar/NavBar";
-import CreateHotspot from "./pages/createHotspotPage/createHotspot";
+import ReportHotspot from "./pages/reportHotspotPage/reportHotspot";
 import Leaderboard from "./pages/leaderboardPage/leaderboard";
 import ProfilePage from "./pages/profilePage/profilePage";
 
@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/map" element={<MapPage />} />
-        <Route path="/create-hotspot" element={<CreateHotspot />} />
+        <Route path="/report-hotspot" element={<ReportHotspot />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/signup" element={<SignupPage/>}/>
