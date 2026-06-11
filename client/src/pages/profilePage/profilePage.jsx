@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ProfileHeader from "../../components/profile/ProfileHeader";
 
 export default function ProfilePage (){
     const [loggedInUser, setLoggedInUser] = useState(null); 
@@ -39,8 +40,7 @@ export default function ProfilePage (){
     if(loggedInUser){
         return (
             <div>
-                <h1>{loggedInUser.username}</h1>
-                 <p>{loggedInUser.email}</p>
+                <ProfileHeader user={loggedInUser}/>
             </div>
         )
     }
