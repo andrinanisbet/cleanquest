@@ -268,3 +268,21 @@ app.put("/api/hotspots/:id/clean", (req, res) => {
     });
   });
 });
+
+// get users points
+app.get("/api/users/:id/points", (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT points FROM users WHERE id = ?";
+
+  db.query(sql, [id], (err, results) => {
+    if (results.length === 0) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    
+    res.json({
+     points: results[0].points,
+    });
+  });
+});
