@@ -29,14 +29,19 @@
 // export default progressBar;
 
 import React from "react";
+import styles from "./ProgressBar.module.css";
+
 
 class ProgressBar extends React.Component {
     render() {
-        return (
-            <div>
+        const { progressValue } = this.props;
+        const rightOffsetString = `${(1 - progressValue) * 100}%`;
+
+     return (
+            <div className="progressBarBackground">
+                <div className="progressBar" style={{left: 0, right: rightOffsetString}}></div>
             </div>
         )
-    }
+};
 }
-
 export default ProgressBar;
