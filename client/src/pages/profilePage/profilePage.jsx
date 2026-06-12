@@ -31,7 +31,7 @@ export default function ProfilePage (){
             setLoggedInUser(data.user);
             dispatch(setCurrentUser(data.user))
         } else {
-            setUserMessage(data.message || "Could not load profile");
+            setUserMessage("Your session has expired. Please log in again");
         }    
     }; 
     
