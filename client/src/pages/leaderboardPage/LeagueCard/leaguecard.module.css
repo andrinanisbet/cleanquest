@@ -2,32 +2,19 @@
     background: #238c3e;
     color: white;
     border-radius: 28px;
-    padding: 20px;
-    margin-bottom: 24px;
+    padding: 22px 24px;
+    margin-bottom: 28px;
 }
 
 .textRow {
     display: flex;
     justify-content: space-between;
-    gap: 16px;
-    font-weight: 800;
+    gap: 20px;
+    font-weight: 900;
 }
 
 .textRow p {
     margin: 0 0 8px;
+    font-size: 15px;
 }
 
-.progressBar {
-    width: 60%;
-    height: 28px;
-    background: #d9d9d9;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-top: 16px;
-}
-
-.progressFill {
-    height: 100%;
-    background: #ffe600;
-    border-radius: 999px;
-}
