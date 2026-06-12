@@ -1,0 +1,45 @@
+.row {
+    display: grid;
+    grid-template-columns: 48px 52px 1fr 150px;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+.rank {
+    margin: 0;
+    font-size: 22px;
+    text-align: right;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #d9d9d9;
+    color: #238c3e;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    font-weight: 900;
+}
+
+.name {
+    margin: 0;
+    font-size: 18px;
+}
+
+.stats p {
+    margin: 0;
+    font-size: 15px;
+}
+
+.cleanups {
+    color: #d7f2dd;
+}
+
+.points {
+    color: #ffe600;
+}

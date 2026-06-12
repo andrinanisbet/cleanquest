@@ -1,0 +1,16 @@
+.wrapper {
+    margin-top: 24px;
+}
+
+.wrapper h2 {
+    color: #238c3e;
+    font-size: 30px;
+    font-weight: 900;
+    margin: 0 0 16px;
+}
+
+.leaderboardList {
+    background: #6fb583;
+    border-radius: 28px;
+    padding: 24px 18px;
+}
