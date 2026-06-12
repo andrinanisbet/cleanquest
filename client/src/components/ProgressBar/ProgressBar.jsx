@@ -38,8 +38,8 @@ class ProgressBar extends React.Component {
         const rightOffsetString = `${(1 - progressValue) * 100}%`;
 
      return (
-            <div className="progressBarBackground">
-                <div className="progressBar" style={{left: 0, right: rightOffsetString}}></div>
+            <div className={styles.progressBarBackground}>
+                <div className={styles.progressBar} style={{left: 0, right: rightOffsetString}}></div>
             </div>
         )
 };
