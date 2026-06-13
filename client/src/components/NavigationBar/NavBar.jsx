@@ -26,11 +26,19 @@ export default function NavigationBar() {
       >
         Leaderboard
       </NavLink>
-            {currentUser && (
-      <NavLink to="/profile" className={styles.profileAvatar}> 
-      {currentUser.username.charAt(0).toUpperCase()}
-      </NavLink>
-            )} 
+            
+      {
+        currentUser ? (
+            <NavLink to="/profile" className={styles.profileAvatar}> 
+                {currentUser.username.charAt(0).toUpperCase()}
+            </NavLink>
+        ) : (
+            <NavLink to="/login"> 
+                Login
+            </NavLink>
+        )
+            
+        } 
     </nav>
   );
 }
