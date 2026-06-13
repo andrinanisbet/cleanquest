@@ -1,0 +1,38 @@
+.card {
+    background: #238c3e;
+    color: white;
+    border-radius: 28px;
+    padding: 42px 24px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.topLine {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
+.fire {
+    font-size: 42px;
+}
+
+.number {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.label {
+    font-size: 24px;
+    font-weight: 900;
+    margin: 28px 0 18px;
+}
+
+.motivation {
+    color: #d7f2dd;
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+}

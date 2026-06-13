@@ -182,6 +182,7 @@ app.get("/api/auth/me", authMiddleware, (req, res) => {
   });
 });
 
+// Route for leaderboard
 app.get("/leaderboard", (req, res) => {
   const sql = `
     SELECT
@@ -195,8 +196,10 @@ app.get("/leaderboard", (req, res) => {
 
   db.query(sql, (err, results) => {
     if (err) {
-      return res.status(500).json(err);
+      console.error("Leaderboard error:", err);
+      return res.status(500).json({ error: "Failed to fetch leaderboard" });
     }
+    
     res.json(results);
   });
 });

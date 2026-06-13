@@ -30,15 +30,15 @@ export default function MapPage() {
     <div className={style.mapPage}>
       {/*HEADER*/}
       <header className={style.mapHeader}>
-        <h1> Find Litter Hotspots</h1>
+        <h1> Report a Litter Hotspot</h1>
 
         {/* INSTRUCTIONAL TEXT */}
         <div className={style.instructions}>
-          <h2> How to create a hotspot</h2>
+          <h2> How to report a litter hotspot</h2>
           <ol>
             <li>Click anwhere on the map</li>
             <li> Fill out the form with details about the hotspot</li>
-            <li>Submit the form to create the hotspot</li>
+            <li>Submit the form to report the hotspot</li>
             <li>It will appear on the map and list below</li>
           </ol>
         </div>
@@ -54,7 +54,7 @@ export default function MapPage() {
         <h3>Hotspots List</h3>
         <p>
           {" "}
-          Here you can find a list of all the hotspots that have been created.
+          Here you can find a list of all the hotspots that have been reported.
         </p>
         {hotspots.length === 0 ? (
           <p>No litter hotspots reported yet.</p>

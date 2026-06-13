@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../store/authSlice";
 
 export default function LoginPage () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginMessage, setLoginMessage] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async () => {
         const response = await fetch("http://localhost:3001/api/auth/login", {
@@ -18,6 +21,7 @@ export default function LoginPage () {
 
         if (response.status === 200) {
             localStorage.setItem("token", data.token);
+            dispatch(setCurrentUser(data.user));
             navigate("/");
 
         } else {
