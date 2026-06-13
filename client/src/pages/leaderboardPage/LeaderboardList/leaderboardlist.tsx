@@ -11,21 +11,44 @@ interface LeaderboardUser {
 
 function LeaderboardList() {
     const [users, setUsers] = useState<LeaderboardUser[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         fetch("http://localhost:3001/leaderboard")
-        .then((res) => res.json())
-        .then((data: LeaderboardUser[]) => setUsers(data))
-        .catch((err) => console.error(err));
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error("Failed to fetch leaderboard");
+            }
+
+            return res.json();
+        })
+        .then((data: LeaderboardUser[]) => {
+            setUsers(data);
+            setLoading(false);
+        })
+        .catch((err) => {
+            console.error(err);
+            setError("Could not load leaderboard");
+            setLoading(false);
+        });
     }, []);
 
     const sortedUsers = [...users].sort(
         (a, b) => b.points - a.points
     );
 
+    if (loading) {
+        return <p>Loading leaderboard...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
     return (
         <section className={styles.wrapper}>
-            <h2>CleanQuest Leaderboard</h2>
+            <h2 className={styles.title}>CleanQuest Leaderboard</h2>
 
         <div className={styles.leaderboardList}>
             {sortedUsers.map((user, index) => (

@@ -1,11 +1,18 @@
 .row {
     display: grid;
-    grid-template-columns: 48px 52px 1fr 150px;
+    grid-template-columns: 44px 54px 120px 130px;
     align-items: center;
     gap: 12px;
     color: white;
-    font-weight: 800;
-    margin-bottom: 16px;
+    font-weight: 900;
+    margin-bottom: 18px;
+    max-width: 430px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row:last-child {
+    margin-bottom: 0;
 }
 
 .rank {
@@ -15,8 +22,8 @@
 }
 
 .avatar {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: #d9d9d9;
     color: #238c3e;
@@ -28,12 +35,17 @@
 
 .name {
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
+}
+
+.stats {
+    text-align: left;
 }
 
 .stats p {
     margin: 0;
     font-size: 15px;
+    line-height: 1.25;
 }
 
 .cleanups {
