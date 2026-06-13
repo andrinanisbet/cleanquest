@@ -7,7 +7,7 @@ export default function ProfileHeader (props){
         <>
         <h1>Profile</h1>
         <div className="user-card">
-            <ProgressBar progressValue={props.user.points % 100}/>
+            <ProgressBar progressValue={props.user.points}/>
             <h2>{props.user.username}</h2>
             <p>Member since: {props.user.created_at}</p>
             <p>Points: {props.user.points}</p>

@@ -1,10 +1,13 @@
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import HomeProgressBar from "./HomePageProgressBar"
 
 export default function Home() {
 return (
-<div> 
+<> 
 <h1>Home</h1>
-<ProgressBar progressValue={50} />
+<div className="user-card">
+<ProgressBar progressValue={props.user.points}/>
 </div>
+</>
 );
 }
