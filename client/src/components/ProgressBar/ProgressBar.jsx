@@ -35,7 +35,7 @@ import styles from "./ProgressBar.module.css";
 class ProgressBar extends React.Component {
     render() {
         const { progressValue } = this.props;
-        const rightOffsetString = `${(1 - progressValue) * 100}%`;
+        const rightOffsetString = `${(100 - progressValue) % 100}%`;
 
      return (
             <div className={styles.progressBarBackground}>
