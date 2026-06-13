@@ -79,6 +79,7 @@ export default function ReportHotspot() {
 
   return (
     <div className="report-hotspot-container"> 
+      <div className="report-hotspot-card">
       <h2>Report a litter hotspot</h2>
 
       <p>Help your community identify areas that need cleaning</p>
@@ -87,25 +88,42 @@ export default function ReportHotspot() {
         onSubmit={handleSubmit}
         className="report-hotspot-form"
       >
-     
+        
+        <label htmlFor="username">User Name</label>
         <input
-          placeholder="Username"
+          placeholder="<<Username should pre-populate>>"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
 
+        <label htmlFor="description">Description of Hotspot</label>
         <textarea
           placeholder="Description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => {
+            setDescription(e.target.value);
+            e.target.style.height = "auto";
+            e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
+          maxLength={200}
           required
         />
+      
+        <p className="character-count">
+            {description.length}/200 characters
+        </p>
 
+        <label htmlFor="address">Address</label>
         <input
-          placeholder="Address"
+          placeholder="Enter address"
           value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          onChange={(e) => {
+            setAddress(e.target.value);
+            e.target.style.height = "auto";
+            e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
+          maxLength={100}
           required
         />
 
@@ -175,6 +193,7 @@ export default function ReportHotspot() {
 
         <button type="submit">Report Hotspot</button>
       </form>
+      </div>
     </div>
   );
 }
