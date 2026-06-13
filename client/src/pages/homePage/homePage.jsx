@@ -51,6 +51,8 @@ export default function Home() {
             </div>
             <div className ={styles.card}>
                 <h2>Eco Level</h2>
+                <p>🌱 Eco Beginner</p>
+                <p>{currentUser?.points || 0} points earned</p>
 
             </div>
             <div className = {styles.card}>
@@ -76,12 +78,21 @@ export default function Home() {
             </div>
             <div className ={styles.card}>
                 <h2>My Saved Hotspots</h2>
+                <p>No saved hotspots yet</p>
+
 
             </div>
             <div className ={styles.card}>
                 <h2>Leaderboard Preview</h2>
-                {topThreeLeaderboard.map((user) => (
-                    <p key={user.user_id}>
+                {topThreeLeaderboard.map((user, index) => (
+                    <p key={user.user_id} className={styles.leaderboardUser}>
+                        <span className={styles.medal}>
+                            {index === 0 && "🥇"}
+                            {index === 1 && "🥈"}
+                            {index === 2 && "🥉"}
+                        </span>
+
+                        
                         {user.username} - {user.points} points
                     </p>
                 ))}
