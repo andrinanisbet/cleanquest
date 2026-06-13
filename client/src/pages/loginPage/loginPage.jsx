@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../store/authSlice";
+import Button from "../../components/Button/Button";
 
 export default function LoginPage () {
     const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ export default function LoginPage () {
         if (response.status === 200) {
             localStorage.setItem("token", data.token);
             dispatch(setCurrentUser(data.user));
-            navigate("/");
+            navigate("/home");
 
         } else {
             setLoginMessage(data.message || "Login failed");
@@ -50,16 +51,15 @@ export default function LoginPage () {
                 setPassword(event.target.value)
             }}/>
         </label>
-        <button onClick={handleLogin}>
+        <Button onClick={handleLogin}>
             Login
-        </button>
+        </Button>
         <p>
             Don't have an account?
         </p>
-        <button onClick={() => {
-            navigate("/signup")
-        }}>Sign up</button>
-
+        <Button onClick={() => navigate("/signup")}>
+            Sign Up
+        </Button>
 
         <p>{loginMessage}</p>
 

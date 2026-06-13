@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import ProfileHeader from "../../components/profile/ProfileHeader";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../store/authSlice";
+import { clearCurrentUser, setCurrentUser } from "../../store/authSlice";
+import { useNavigate } from "react-router-dom";
+
+import Button from "../../components/Button/Button";
 
 export default function ProfilePage (){
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [loggedInUser, setLoggedInUser] = useState(null); 
     const [userMessage, setUserMessage] = useState(""); 
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        dispatch(clearCurrentUser());
+        navigate("/");
+    }
 
     useEffect(() => {
         const getUserProfile = async() => {
@@ -31,7 +41,7 @@ export default function ProfilePage (){
             setLoggedInUser(data.user);
             dispatch(setCurrentUser(data.user))
         } else {
-            setUserMessage(data.message || "Could not load profile");
+            setUserMessage("Your session has expired. Please log in again");
         }    
     }; 
     
@@ -46,6 +56,9 @@ export default function ProfilePage (){
         return (
             <div>
                 <ProfileHeader user={loggedInUser}/>
+                <Button onClick={handleLogout}>
+                    Logout
+                </Button>
             </div>
         )
     }

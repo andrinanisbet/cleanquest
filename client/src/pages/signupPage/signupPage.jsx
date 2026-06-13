@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 
 export default function SignupPage () {
@@ -69,14 +70,12 @@ export default function SignupPage () {
                     setConfirmPassword(event.target.value)
                 }} />
             </label>
-            <button onClick={handleCreateAccount}>
+            <Button onClick={handleCreateAccount}>
                 Create Account
-            </button>
-            <button onClick={() => {
-                navigate("/login")
-            }}>
+            </Button>
+            <Button onClick={() => navigate("/login")}>
                 Already have an account? Login
-            </button>
+            </Button>
             {
                 signupMessage ? (
                     <p>{signupMessage}</p>
