@@ -8,7 +8,7 @@ export default function NavigationBar() {
   return (
     <nav className={styles.navbar}>
       <NavLink
-        to="/"
+        to="/home"
         className={({ isActive }) => (isActive ? styles.activeLink : "")}
       >
         Home
@@ -26,11 +26,19 @@ export default function NavigationBar() {
       >
         Leaderboard
       </NavLink>
-            {currentUser && (
-      <NavLink to="/profile" className={styles.profileAvatar}> 
-      {currentUser.username.charAt(0).toUpperCase()}
-      </NavLink>
-            )} 
+            
+      {
+        currentUser ? (
+            <NavLink to="/profile" className={styles.profileAvatar}> 
+                {currentUser.username.charAt(0).toUpperCase()}
+            </NavLink>
+        ) : (
+            <NavLink to="/login"> 
+                Login
+            </NavLink>
+        )
+            
+        } 
     </nav>
   );
 }
