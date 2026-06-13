@@ -1,4 +1,3 @@
-// import HomeProgressBar from "./HomePageProgressBar"
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser } from "../../store/authSlice";
