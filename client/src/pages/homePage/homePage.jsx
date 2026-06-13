@@ -1,13 +1,14 @@
+// import HomeProgressBar from "./HomePageProgressBar"
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
-import HomeProgressBar from "./HomePageProgressBar"
+import { useSelector } from 'react-redux'
+
 
 export default function Home() {
+    const currentUser = useSelector((state) => state.auth.currentUser)
 return (
 <> 
 <h1>Home</h1>
-<div className="user-card">
-<ProgressBar progressValue={props.user.points}/>
-</div>
+<ProgressBar progressValue={currentUser.points}/>
 </>
 );
-}
+};
