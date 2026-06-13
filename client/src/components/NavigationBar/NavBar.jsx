@@ -8,7 +8,7 @@ export default function NavigationBar() {
   return (
     <nav className={styles.navbar}>
       <NavLink
-        to="/"
+        to="/home"
         className={({ isActive }) => (isActive ? styles.activeLink : "")}
       >
         Home

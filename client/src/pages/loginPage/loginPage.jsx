@@ -23,7 +23,7 @@ export default function LoginPage () {
         if (response.status === 200) {
             localStorage.setItem("token", data.token);
             dispatch(setCurrentUser(data.user));
-            navigate("/");
+            navigate("/home");
 
         } else {
             setLoginMessage(data.message || "Login failed");

@@ -1,5 +1,6 @@
 
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import usePersistAuth from "./hooks/usePersistAuth";
 
 import LoginPage from "./pages/loginPage/loginPage";
@@ -15,17 +16,26 @@ import ProfilePage from "./pages/profilePage/profilePage";
 
 function App() {
   usePersistAuth();
+  const currentUser = useSelector((state) => state.auth.currentUser)
 
   return (
     <div>
       <NavigationBar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        // Show Home for authenticated users, otherwise show Login
+        <Route 
+          path="/" 
+          element={
+            !currentUser
+            ? <LoginPage />
+            : <Home />
+          }/>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/map" element={<MapPage />} />
         <Route path="/create-hotspot" element={<CreateHotspot />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/login" element={<LoginPage/>}/>
         <Route path="/signup" element={<SignupPage/>}/>
         <Route path="/profile" element={<ProfilePage/>}/>
       </Routes>
