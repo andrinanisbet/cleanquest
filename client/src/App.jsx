@@ -1,5 +1,7 @@
 
 import { Routes, Route } from "react-router-dom";
+import usePersistAuth from "./hooks/usePersistAuth";
+
 import LoginPage from "./pages/loginPage/loginPage";
 import SignupPage from "./pages/signupPage/signupPage";
 import "leaflet/dist/leaflet.css";
@@ -12,6 +14,8 @@ import Leaderboard from "./pages/leaderboardPage/leaderboard";
 import ProfilePage from "./pages/profilePage/profilePage";
 
 function App() {
+  usePersistAuth();
+
   return (
     <div>
       <NavigationBar />
