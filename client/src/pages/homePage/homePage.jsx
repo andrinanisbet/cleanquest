@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentUser } from "../../store/authSlice";
 import { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
+import getUserLevel from "../../components/ProgressBar/Levels";
 
 export default function Home() {
     const currentUser = useSelector((state) => state.auth.currentUser);
+
+    const { level, title, progress} = getUserLevel();
     const [leaderboard, setLeaderboard] = useState([]);
     const [hotspots, setHotspots] = useState([]);
 
@@ -86,9 +89,9 @@ export default function Home() {
             </div>
             <div className ={styles.card}>
                 <h2>Eco Level</h2>
-                <p>🌱 Eco Beginner</p>
+                <p>Level {level}: {title}</p>
                 {currentUser && (
-                <ProgressBar progressValue={currentUser.points}/>
+                <ProgressBar progressValue={progress}/>
                 )}
                 <p>{currentUser?.points || 0} points earned</p>
 
