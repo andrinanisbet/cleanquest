@@ -1,0 +1,138 @@
+.report-hotspot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.report-hotspot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.report-hotspot-card {
+  background-color: rgb(220, 240, 220);
+  padding: 24px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.report-hotspot-card h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.report-hotspot-card p {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.report-hotspot-form input,[type="file"] {
+  background-color: white;
+  border: 1px solid rgb(160, 190, 160);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.report-hotspot-form textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 8px;
+  border: 1px solid rgb(160, 190, 160);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.report-hotspot-form select {
+  background-color: white;
+  border: 1px solid rgb(160, 190, 160);
+  border-radius: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.report-hotspot-form input:focus,
+.report-hotspot-form textarea:focus,
+.report-hotspot-form select:focus {
+  outline: none;
+  border-color: rgb(90, 170, 90);
+  box-shadow: 0 0 0 3px rgba(90, 170, 90, 0.25);
+}
+
+.report-hotspot-form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid rgb(160, 190, 160);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: rgb(180, 220, 180);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.report-hotspot-form button:hover {
+  background-color: rgb(160, 205, 160);
+}
+
+.report-hotspot-form fieldset {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgb(160, 190, 160);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.report-hotspot-form fieldset label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.report-hotspot-form fieldset input[type="radio"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+.severity-options {
+  display: flex;
+  gap: 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.severity-options label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  
+}
+
+.character-count {
+ align-self: flex-end;
+  margin-top: -8px;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  color: #666;  
+}
+
+@media (max-width: 600px) {
+  .report-hotspot-container {
+    padding: 12px;
+  }
+
+  .report-hotspot-card {
+    padding: 18px;
+  }
+
+  .severity-options {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
