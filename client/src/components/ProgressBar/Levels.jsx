@@ -31,9 +31,9 @@ const Levels = [
                 title: Levels[level].title
             };
         }
-        const {level, title } = getlevel(currentPoints);
+        const {level, title } = getLevel(currentPoints);
         const progress = currentPoints % 100;
-        
+
 
         return {
             level,

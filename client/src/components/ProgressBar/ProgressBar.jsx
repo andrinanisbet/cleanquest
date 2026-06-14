@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./ProgressBar.module.css";
+import getUserLevel from "../../components/ProgressBar/Levels";
 
 
 class ProgressBar extends React.Component {
