@@ -3,8 +3,6 @@ import ProgressBar from "../../../components/ProgressBar/ProgressBar";
 import { useSelector } from "react-redux";
 import getUserLevel from "../../../components/ProgressBar/Levels";
 
-
-
 function LeagueCard() {
     const currentUser = useSelector((state) => state.auth.currentUser)
 
