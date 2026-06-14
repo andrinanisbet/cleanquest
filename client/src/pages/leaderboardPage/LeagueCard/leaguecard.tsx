@@ -8,7 +8,7 @@ function LeagueCard() {
     const currentUser = useSelector((state) => state.auth.currentUser)
     const currentLeague = "Silver";
     const nextLeague = "Gold";
-    const currentPoints = 900;
+    const currentPoints = currentUser.points;
     const pointsNeeded = 1000;
 
     const progressPercent = (currentPoints / pointsNeeded) * 100;

@@ -1,7 +1,10 @@
 import styles from "./streakcard.module.css";
+import { useSelector } from "react-redux";
+
 
 function StreakCard() {
-    const streak = 12;
+     const currentUser = useSelector((state) => state.auth.currentUser)
+    const streak = currentUser.streak;
 
     return (
         <section className={styles.card}>
