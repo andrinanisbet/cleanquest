@@ -3,7 +3,6 @@ import StreakCard from "./StreakCard/streakcard";
 import LeagueCard from "./LeagueCard/leaguecard";
 import LeaderboardList from "./LeaderboardList/leaderboardList";
 import styles from "./leaderboard.module.css";
-import ProgressBar from "../../components/ProgressBar/ProgressBar";
 
 
 function Leaderboard() {
@@ -12,7 +11,6 @@ function Leaderboard() {
         <Header />
         <StreakCard />
         <LeagueCard />
-        <ProgressBar progressValue={50} />
         <LeaderboardList />
         </main>
     );
