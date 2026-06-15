@@ -1,6 +1,5 @@
 import ProgressBar from "../../components/ProgressBar/ProgressBar";
-import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentUser } from "../../store/authSlice";
+import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
 import getUserLevel from "../../components/ProgressBar/Levels";
@@ -8,43 +7,43 @@ import getUserLevel from "../../components/ProgressBar/Levels";
 export default function Home() {
     const currentUser = useSelector((state) => state.auth.currentUser);
 
-    const { level, title, progress} = getUserLevel();
+    const userPoints = currentUser?.points || 0
+    const { level, title, progress} = getUserLevel(userPoints);
     const [leaderboard, setLeaderboard] = useState([]);
     const [hotspots, setHotspots] = useState([]);
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+    // const [loggedInUser, setLoggedInUser] = useState(null); 
+    // const [userMessage, setUserMessage] = useState(""); 
 
-    const [loggedInUser, setLoggedInUser] = useState(null); 
-    const [userMessage, setUserMessage] = useState(""); 
-
-    useEffect(() => {
-        const getUserProfile = async() => {
-            let token = localStorage.getItem("token");
+    // useEffect(() => {
+    //     const getUserProfile = async() => {
+    //         let token = localStorage.getItem("token");
             
-            if (!token) {
-                setUserMessage("Please login to view your profile")
-                return;
-            }
+    //         if (!token) {
+    //             setUserMessage("Please login to view your profile")
+    //             return;
+    //         }
 
-            const response = await fetch("http://localhost:3001/api/auth/me",{
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+    //         const response = await fetch("http://localhost:3001/api/auth/me",{
+    //         method: "GET",
+    //         headers: {
+    //             Authorization: `Bearer ${token}`,
+    //         },
+    //     });
 
-        const data = await response.json()
+    //     const data = await response.json()
 
-        if(response.status === 200){
-            setLoggedInUser(data.user);
-            dispatch(setCurrentUser(data.user))
-        } else {
-            setUserMessage(data.message || "Could not load profile");
-        }    
-    }; 
+    //     if(response.status === 200){
+    //         setLoggedInUser(data.user);
+    //         dispatch(setCurrentUser(data.user))
+    //     } else {
+    //         setUserMessage(data.message || "Could not load profile");
+    //     }    
+    // }; 
     
-    getUserProfile();
-    }, [dispatch])
+    // getUserProfile();
+    // }, [dispatch])
 
     useEffect(() => {
         const getLeaderboardData = async () => {
@@ -93,7 +92,7 @@ export default function Home() {
                 {currentUser && (
                 <ProgressBar progressValue={progress}/>
                 )}
-                <p>{currentUser?.points || 0} points earned</p>
+                <p>{userPoints} points earned</p>
 
             </div>
             <div className = {styles.card}>

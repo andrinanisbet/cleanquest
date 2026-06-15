@@ -6,8 +6,10 @@ export default function usePersistAuth () {
 const dispatch = useDispatch();
 
   useEffect(() => {
-    let token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
+
     if(!token){
+      dispatch(clearCurrentUser());
       return;
     }
 
@@ -35,8 +37,8 @@ const dispatch = useDispatch();
       }
     }
 
-    checkUser()
+    checkUser();
 
-  }, [dispatch])
+  }, [dispatch]);
 
 }

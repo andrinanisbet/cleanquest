@@ -6,14 +6,16 @@ import getUserLevel from "../../components/ProgressBar/Levels";
 class ProgressBar extends React.Component {
     render() {
         const { progressValue } = this.props;
-        const rightOffsetString = `${(100 - progressValue) % 100}%`;
+
+        const safeProgressValue = Math.min(Math.max(progressValue || 0, 0), 100);
 
 
      return (
             <div className={styles.progressBarBackground}>
-                <div className={styles.progressBar} style={{left: 0, right: rightOffsetString}}></div>
+                <div className={styles.progressBar} style={{ width: `${safeProgressValue}%` }}>       
+                </div>
             </div>
-        )
-};
+        );
+}
 }
 export default ProgressBar;
