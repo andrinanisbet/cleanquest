@@ -126,12 +126,12 @@ export default function Map({ center }) {
                 <p>Use this location?</p>
                 <button
                   onClick={() =>
-                    navigate("/create-hotspot", {
+                    navigate("/report-hotspot", {
                       state: selectedLocation,
                     })
                   }
                 >
-                  Create Hotspot Here
+                  Report Hotspot Here
                 </button>
               </div>
             </Popup>
