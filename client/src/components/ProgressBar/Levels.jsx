@@ -37,6 +37,8 @@ const Levels = [
         return {
             level,
             title: Levels[level].title,
+            nextLevelNumber: nextLevel ? level + 1 : level,
+            nextTitle: nextLevel ? nextLevel.title : "Max level reached",
             progress,
             points: currentPoints,
             pointsToNextLevel,
