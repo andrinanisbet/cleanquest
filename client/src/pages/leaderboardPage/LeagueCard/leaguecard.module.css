@@ -1,20 +1,33 @@
 .card {
-    background: #238c3e;
+    background: #248f3d;
     color: white;
     border-radius: 28px;
-    padding: 22px 24px;
-    margin-bottom: 28px;
+    padding: 28px 32px;
 }
 
-.textRow {
+.nextLevel {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0.9;
+    text-align: right;
+}
+
+.levelRow {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
-    font-weight: 900;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    font-weight: 800;
 }
 
-.textRow p {
-    margin: 0 0 8px;
-    font-size: 15px;
+.levelRow p {
+    margin: 0;
 }
 
+.pointsText {
+    margin: 10px 0 0;
+    text-align: center;
+    font-weight: 700;
+}

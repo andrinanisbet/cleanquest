@@ -34,22 +34,25 @@ function LeagueCard() {
 
     const currentPoints = currentUser?.points || 0;
 
-    const { level, title, progress, pointsToNextLevel } = 
+    const { level, title, nextLevelNumber, nextTitle, progress, pointsToNextLevel } = 
         getUserLevel(currentPoints);
 
     return (
         <section className={styles.card}>
-            <div className={styles.textRow}>
-                <p> Level: {level} {title}    
+            <div className={styles.levelRow}>
+                <p> 
+                    Level {level}: {title}    
                 </p>
 
-                <div>
+                <p className={styles.nextLevel}>
+                    Next Level {nextLevelNumber}: {nextTitle}
+                </p>
+</div>
                     <ProgressBar progressValue={progress} />
                     
-                    <p>Earn {pointsToNextLevel} more points to level up</p>
-                </div>
-            </div>
-
+                    <p className={styles.pointsText}>
+                        Earn {pointsToNextLevel} more points to level up
+                        </p>
         </section>
     );
 }

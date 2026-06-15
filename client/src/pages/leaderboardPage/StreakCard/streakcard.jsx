@@ -13,7 +13,7 @@ function StreakCard() {
                 <span className={styles.number}>{streak}</span>
             </div>
             
-            <p className={styles.label}>Day Streak</p>
+            <p className={styles.label}>CleanUp Streak</p>
             <p className={styles.motivation}>Keep going - every cleanup counts!</p>
         </section>
     );
