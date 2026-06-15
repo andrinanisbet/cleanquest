@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-
 //Array for levels minimum points and the level titles
 const Levels = [
             {min: 0, title: "Eco Beginner 🌱"},
@@ -15,13 +13,7 @@ const Levels = [
             {min: 1000, title: "Cleanquest Hero 🥇"}
         ];
 
-    export default function getUserLevel() {
-        //getting currently logged in user data
-        const currentUser = useSelector((state) => state.auth.currentUser);
-
-        //getting logged in users points
-        const currentPoints = currentUser.points; 
-        
+    export default function getUserLevel(currentPoints = 0) {
         //function to find the users level
         //loops through each level threshhold from level 0 and updates level if user has enough points
         //sets level with index

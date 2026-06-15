@@ -6,7 +6,8 @@ import getUserLevel from "../../../components/ProgressBar/Levels";
 function LeagueCard() {
     const currentUser = useSelector((state) => state.auth.currentUser)
 
-    const {level, title, progress} = getUserLevel();
+    const userPoints = currentUser?.points || 0;
+    const { level, title, progress } = getUserLevel(userPoints);
     const pointsNeeded = 100;
 
     // const progressPercent = (currentPoints / pointsNeeded) * 100;
