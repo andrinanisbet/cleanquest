@@ -1,0 +1,13 @@
+.progressBar {
+    top: 5px;
+    bottom: 5px;
+    background: rgb(7, 137, 14);
+    position: absolute;
+  }
+  
+  .progressBarBackground {
+    position: relative;
+    height: 24px;
+    width: 310px;
+    background: rgb(0, 0, 0);
+  }

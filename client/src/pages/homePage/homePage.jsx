@@ -1,12 +1,50 @@
+import ProgressBar from "../../components/ProgressBar/ProgressBar";
+import { useSelector, useDispatch } from 'react-redux'
+import { setCurrentUser } from "../../store/authSlice";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import styles from "./homePage.module.css";
-
+import styles from "./homepage.module.css";
+import getUserLevel from "../../components/ProgressBar/Levels";
 
 export default function Home() {
     const currentUser = useSelector((state) => state.auth.currentUser);
+
+    const { level, title, progress} = getUserLevel();
     const [leaderboard, setLeaderboard] = useState([]);
     const [hotspots, setHotspots] = useState([]);
+
+    const dispatch = useDispatch()
+
+    const [loggedInUser, setLoggedInUser] = useState(null); 
+    const [userMessage, setUserMessage] = useState(""); 
+
+    useEffect(() => {
+        const getUserProfile = async() => {
+            let token = localStorage.getItem("token");
+            
+            if (!token) {
+                setUserMessage("Please login to view your profile")
+                return;
+            }
+
+            const response = await fetch("http://localhost:3001/api/auth/me",{
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const data = await response.json()
+
+        if(response.status === 200){
+            setLoggedInUser(data.user);
+            dispatch(setCurrentUser(data.user))
+        } else {
+            setUserMessage(data.message || "Could not load profile");
+        }    
+    }; 
+    
+    getUserProfile();
+    }, [dispatch])
 
     useEffect(() => {
         const getLeaderboardData = async () => {
@@ -51,7 +89,10 @@ export default function Home() {
             </div>
             <div className ={styles.card}>
                 <h2>Eco Level</h2>
-                <p>🌱 Eco Beginner</p>
+                <p>Level {level}: {title}</p>
+                {currentUser && (
+                <ProgressBar progressValue={progress}/>
+                )}
                 <p>{currentUser?.points || 0} points earned</p>
 
             </div>

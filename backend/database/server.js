@@ -268,3 +268,4 @@ app.put("/api/hotspots/:id/clean", (req, res) => {
     });
   });
 });
+
