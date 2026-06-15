@@ -148,6 +148,10 @@ app.post("/api/auth/login", async (req, res) => {
         user_id: user.user_id,
         username: user.username,
         email: user.email,
+        points: user.points,
+        streak: user.streak,
+        last_cleanup_date: user.last_cleanup_date,
+        created_at: user.created_at,
       },
     });
   });
