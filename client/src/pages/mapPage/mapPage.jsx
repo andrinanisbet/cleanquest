@@ -59,15 +59,19 @@ export default function MapPage() {
         {hotspots.length === 0 ? (
           <p>No litter hotspots reported yet.</p>
         ) : (
-          hotspots.map((h) => (
-            <div key={h.id} className={style.hotspotItem}>
-              <h5>{h.address}</h5>
-              <p>{h.username}</p>
-              <p>{h.description}</p>
-              <p>Status: {h.status}</p>
-              <button onClick={() => markCleaned(h.id)}>Mark as cleaned</button>
-            </div>
-          ))
+          hotspots
+            .filter((h) => h.status !== "cleaned")
+            .map((h) => (
+              <div key={h.id} className={style.hotspotItem}>
+                <h5>{h.address}</h5>
+                <p>{h.username}</p>
+                <p>{h.description}</p>
+                <p>Status: {h.status}</p>
+                <button onClick={() => markCleaned(h.id)}>
+                  Mark as cleaned
+                </button>
+              </div>
+            ))
         )}
       </div>
     </div>
