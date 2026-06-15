@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedLocation } from "../store/locationSlice";
+import { setCurrentUser } from "../store/authSlice";
 import { useLocation } from "react-router-dom";
 
 /* Click Handler */
@@ -34,6 +35,7 @@ export default function Map({ center }) {
   const [hotspots, setHotspots] = useState([]);
   const [banner, setBanner] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const selectedLocation = useSelector(
@@ -57,19 +59,45 @@ export default function Map({ center }) {
         setBanner("");
       }, 2000);
     }
-  }, []);
+  }, [location.state]);
 
   /* Mark cleaned */
+  const refreshCurrentUser = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch("http://localhost:3001/api/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to refresh current user");
+    }
+
+    const data = await res.json();
+
+    console.log("Refreshed user after cleanup:", data.user);
+
+    dispatch(setCurrentUser(data.user));
+  };
+
   const markCleaned = async (id) => {
     try {
-      const res = await fetch(
-        `http://localhost:3001/api/hotspots/${id}/clean`,
-        { method: "PUT" },
-      );
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`http://localhost:3001/api/hotspots/${id}/clean`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!res.ok) throw new Error("Request failed");
 
       await res.json();
+
+      await refreshCurrentUser();
 
       fetch("http://localhost:3001/api/hotspots")
         .then((res) => res.json())
@@ -126,12 +154,12 @@ export default function Map({ center }) {
                 <p>Use this location?</p>
                 <button
                   onClick={() =>
-                    navigate("/create-hotspot", {
+                    navigate("/report-hotspot", {
                       state: selectedLocation,
                     })
                   }
                 >
-                  Create Hotspot Here
+                  Report Hotspot Here
                 </button>
               </div>
             </Popup>

@@ -3,7 +3,9 @@ import ProgressBar from "../../components/ProgressBar/ProgressBar";
 import getUserLevel from "../../components/ProgressBar/Levels";
 
 export default function ProfileHeader (props){
-    const { level, title, progress} = getUserLevel();
+    const currentPoints = props.user?.points || 0;
+    
+    const { level, title, progress, pointsToNextLevel } = getUserLevel(currentPoints);
 
     return (
         <>

@@ -13,15 +13,27 @@ export default function MapPage() {
 
   const markCleaned = async (id) => {
     try {
-      await fetch(`http://localhost:3001/api/hotspots/${id}/clean`, {
+      const token = localStorage.getItem("token");
+      
+      const res = await fetch(`http://localhost:3001/api/hotspots/${id}/clean`, {
         method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      if (!res.ok) {
+        throw new Error("Failed to mark hotspot as cleaned");
+      }
+
+      await res.json();
 
       fetchHotspots();
     } catch (err) {
       console.error("Failed to mark cleaned:", err);
     }
   };
+  
   useEffect(() => {
     fetchHotspots();
   }, []);

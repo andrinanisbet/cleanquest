@@ -148,6 +148,8 @@ app.post("/api/auth/login", async (req, res) => {
         user_id: user.user_id,
         username: user.username,
         email: user.email,
+        points: user.points,
+        streak: user.streak,
       },
     });
   });
@@ -246,26 +248,69 @@ app.get("/api/hotspots", (req, res) => {
   });
 });
 
-// Route to update hotspot
-app.put("/api/hotspots/:id/clean", (req, res) => {
-  const { id } = req.params;
-
+//Helper function 
+function awardCleanupPoints(userId, pointsToAdd, callback) {
+  console.log("Awarding points to user:", userId);
+  console.log("Points to add:", pointsToAdd);
+  
   const sql = `
+    UPDATE users
+    SET
+      points = points + ?,
+      streak = streak + 1,
+      last_cleanup_date = NOW()
+    WHERE user_id = ?
+    `;
+
+    db.query(sql, [pointsToAdd, userId], callback);
+}
+
+// Route to update hotspot and award user points
+app.put("/api/hotspots/:id/clean", authMiddleware, (req, res) => {
+  console.log("Clean route hit");
+  console.log("Hotspot id:", req.params.id);
+  console.log("Decoded user:", req.user);
+
+  const { id } = req.params;
+  const userId = req.user.user_id;
+  const pointsToAdd = 25;
+
+  const cleanHotspotSql = `
     UPDATE hotspots
     SET status = 'cleaned'
     WHERE id = ?
   `;
 
-  db.query(sql, [id], (err, result) => {
+  db.query(cleanHotspotSql, [id], (err, result) => {
     if (err) {
-      console.error(err);
-      return res.status(500).json(err);
+      console.error("Hotspot clean error:", err);
+      return res.status(500).json({
+        message: "Failed to mark hotspot as cleaned",
+        error: err,
+      });
+    }
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        message: "Hotspot not found",
+      });
     }
 
-    res.json({
-      message: "Hotspot marked as cleaned",
-      id,
+    awardCleanupPoints(userId, pointsToAdd, (err) => {
+      if (err) {
+        console.error("Award points error:", err);
+        return res.status(500).json({
+          message: "Hotspot was cleaned, but points could not be awarded",
+          error: err,
+        });
+      }
+
+      res.json({
+        message: "Hotspot marked as cleaned and points awarded",
+        hotspot_id: id,
+        user_id: userId,
+        points_awarded: pointsToAdd,
+      });
     });
   });
 });
-
