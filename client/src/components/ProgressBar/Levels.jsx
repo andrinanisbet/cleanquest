@@ -14,33 +14,31 @@ const Levels = [
         ];
 
     export default function getUserLevel(currentPoints = 0) {
-        //function to find the users level
-        //loops through each level threshhold from level 0 and updates level if user has enough points
-        //sets level with index
-        function getLevel(points) {
-            let level = 0;
-            for (let i = 0; i < Levels.length; i++) {
-                if (points >= Levels[i].min) {
-                    level = i
-                }
+
+        let level = 0;
+
+        for (let i=0; i < Levels.length; i++) {
+            if (currentPoints >= Levels[i].min) {
+                level = i;
             }
-
-            // returns level and corresponding title for when user points were more than level minimum
-            return {
-                level,
-                title: Levels[level].title
-            };
         }
-        //has users current level and level title info
-        const {level, title } = getLevel(currentPoints);
-        // calculates progress no next level & resets bar for each level
-        const progress = currentPoints % 100;
 
-        // return users level info
+        const currentLevelMin = Levels[level].min;
+        const nextLevel = Levels[level + 1];
+
+        const progress = nextLevel
+            ? ((currentPoints - currentLevelMin) / (nextLevel.min - currentLevelMin)) * 100
+            : 100;
+
+        const pointsToNextLevel = nextLevel
+            ? nextLevel.min - currentPoints
+            : 0;
+        
         return {
             level,
-            title,
+            title: Levels[level].title,
             progress,
-            points: currentPoints
+            points: currentPoints,
+            pointsToNextLevel,
         };
     }
