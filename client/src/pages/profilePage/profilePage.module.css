@@ -1,0 +1,12 @@
+.profilePage {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.levelCard {
+    background-color: rgb(220, 240, 220);
+    padding: 20px;
+    border-radius: 12px;
+}
