@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../store/authSlice";
 import Button from "../../components/Button/Button";
+import styles from "./loginPage.module.css";
 
 export default function LoginPage () {
     const [email, setEmail] = useState("");
@@ -32,37 +33,53 @@ export default function LoginPage () {
     }
 
     return(
-        <div>
-        <h1>LoginPage</h1>
-        <label>
-            Email: 
-            <input name="emailInput"
-            value={email}
-            onChange = {(event) => {
-                setEmail(event.target.value)
-            }}/>
-        </label>
-        <label>
-            Password: 
-            <input name="passwordInput"
-            type="password"
-            value={password}
-            onChange={(event) => {
-                setPassword(event.target.value)
-            }}/>
-        </label>
-        <Button onClick={handleLogin}>
-            Login
-        </Button>
-        <p>
-            Don't have an account?
-        </p>
-        <Button onClick={() => navigate("/signup")}>
-            Sign Up
-        </Button>
+        <div className={styles.loginPage}>
+            <section className={styles.loginCard}>
+                <h1>Welcome back</h1>
+                <p>Log in to continue your CleanQuest journey.</p>
 
-        <p>{loginMessage}</p>
+                <label>
+                    Email: 
+                    <input 
+                    name="emailInput"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange = {(event) => {
+                        setEmail(event.target.value)
+                    }}/>
+                </label>
+                <label>
+                    Password: 
+                    <input 
+                    name="passwordInput"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(event) => {
+                        setPassword(event.target.value)
+                    }}/>
+                </label>
+                <Button 
+                className={styles.loginButton}
+                onClick={handleLogin}
+                >
+                    Login
+                </Button>
+                <div className={styles.signupSection}>
+                    <p>Don't have an account?</p>
+                    <Button onClick={() => navigate("/signup")}>
+                        Sign Up
+                    </Button>
+                </div>
 
+
+                {loginMessage && (
+                    <p className={styles.errorMessage}>
+                        {loginMessage}
+                    </p>
+                )}
+            </section>
         </div>
 
     )
