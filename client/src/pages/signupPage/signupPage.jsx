@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import styles from "./signupPage.module.css";
 
 
 export default function SignupPage () {
@@ -33,57 +34,75 @@ export default function SignupPage () {
     }
 
     return (
-        <div>
-            <h1>Sign Up Page</h1>
-            <h2>Create Account</h2>
-            <label>
-                Username:
-                <input name="usernameInput"
-                value={username}
-                onChange={(event) => {
-                    setUsername(event.target.value)
-                }} />
-            </label>
-            <label>
-                Email:
-                <input name="emailInput"
-                value={email}
-                onChange={(event) => {
-                    setEmail(event.target.value)
-                }} />
-            </label>
-            <label>
-                Password:
-                <input name="passwordInput"
-                type="password"
-                value={password}
-                onChange={(event) => {
-                    setPassword(event.target.value)
-                }} />
-            </label>
-            <label>
-                Confirm password:
-                <input name="confirmPasswordInput"
-                type="password"
-                value={confirmPassword}
-                onChange={(event) => {
-                    setConfirmPassword(event.target.value)
-                }} />
-            </label>
-            <Button onClick={handleCreateAccount}>
-                Create Account
-            </Button>
-            <Button onClick={() => navigate("/login")}>
-                Already have an account? Login
-            </Button>
-            {
-                signupMessage ? (
-                    <p>{signupMessage}</p>
-                ) : null
-            }
-
-
-
+        <div className={styles.signupPage}>
+            <section className={styles.signupCard}>
+                <h1>Create Account</h1>
+                <p>Join CleanQuest and start making a difference.</p>
+                <label>
+                    Username:
+                    <input 
+                    name="usernameInput"
+                    placeholder="Choose a username"
+                    value={username}
+                    onChange={(event) => {
+                        setUsername(event.target.value)
+                    }} />
+                </label>
+                <label>
+                    Email:
+                    <input 
+                    type="email"
+                    name="emailInput"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(event) => {
+                        setEmail(event.target.value)
+                    }} />
+                </label>
+                <label>
+                    Password:
+                    <input 
+                    name="passwordInput"
+                    placeholder="Choose your password"
+                    type="password"
+                    value={password}
+                    onChange={(event) => {
+                        setPassword(event.target.value)
+                    }} />
+                </label>
+                <label>
+                    Confirm password:
+                    <input 
+                    name="confirmPasswordInput"
+                    placeholder="Confirm your password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(event) => {
+                        setConfirmPassword(event.target.value)
+                    }} />
+                </label>
+                <Button 
+                    className={styles.signupButton}
+                    onClick={handleCreateAccount}
+                >
+                    Create Account
+                </Button>
+                <div className={styles.signupSection}>
+                    <p>Already have an account?</p>
+                    <Button 
+                    className={styles.loginButton}
+                    onClick={() => navigate("/login")}>
+                        Login
+                    </Button>
+                </div>
+                
+                {signupMessage && (
+                    <p className={styles.errorMessage}>
+                        {signupMessage}
+                    </p>
+               )}
+            </section>
+            
         </div>
     )
 
