@@ -13,7 +13,7 @@ First clone the GitHub repository
 `git clone`.
 
 #### Step 2- 
-Then navigate to the **frontend** of the project by doing `cd client`. Then install the dependencies by doing `np install`.
+Then navigate to the **frontend** of the project `cd client`, and install the dependencies using `np install`.
 
 These are the depencencies you will be installing from the frontend:
 ```
@@ -37,7 +37,7 @@ These are the depencencies you will be installing from the frontend:
 ```
 
 #### Step 3- 
-Then navigate to the **backend** of the project `cd backend`. In the backend, install the dependencies by doing `npm install` again.
+Then navigate to the **backend** of the project `cd backend`, and install the backend dependencies using `npm install` again.
 
 These are the depencecies you will be installing from the backend:
 ```
@@ -51,7 +51,7 @@ These are the depencecies you will be installing from the backend:
 ```
 
 #### Step 4- 
-To allow the server in the backend to run you will need navigate to the `backend` and into the databse folder to create a `.env` file with the following information:
+To allow the server in the backend to run, you will need navigate to the `backend` and into the database folder to create a `.env` file with the following information:
 
 - backend server port `PORT=3001`
 - Database settings:
@@ -69,10 +69,10 @@ Create the SQL `CleanupQuest.sql` database from the backend in a platform like D
 To run the application, follow these steps:
 
 #### Step 1-
-First start the server. Make sure you navigate to the `backend` and into the `database` directory. Then in the terminal write `node server.js` If all the information in correct in your `.env` the server should run, otherwise refer to the error code in the console to correct any mistakes.
+First start the server. Make sure you navigate to the `backend` and into the `database` directory. Then in the terminal enter `node server.js`. If all the information in correct in your `.env` the server should run, otherwise refer to the error code in the console to correct any mistakes.
 
 #### Step 2-
-next open another terminal and navigate to the front end of the application into `client`. Here use `npm run dev` to start the application. Open the URL provided in your web browser to see the application. 
+next open another terminal and navigate to the front end of the application into `client`. Here enter `npm run dev` to start the application. Open the URL in your web browser to see the application. 
 
 #### Step 3- 
 To start using CleanQuest create an account by selecting **sign up**. Once you sign up, you can **log in** with your email and password to begin exploring CleanQuest!
