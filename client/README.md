@@ -62,6 +62,8 @@ To allow the server in the backend to run you will need navigate to the `backend
 - JWT secret used for signing tokens:
     `JWT_SECRET=add_your_secret_here`.
 
+#### Step 5-
+Create the SQL `CleanupQuest.sql` database from the backend in a platform like DBeaver.
 
 ## Running The App
 To run the application, follow these steps:
