@@ -14,3 +14,9 @@
   color: black;
   cursor: pointer;
 }
+
+body {
+  /* font-family: "Inter", sans-serif; */
+  /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

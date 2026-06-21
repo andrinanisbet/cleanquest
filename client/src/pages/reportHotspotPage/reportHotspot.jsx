@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./reportHotspot.css";
@@ -6,9 +6,8 @@ import "./reportHotspot.css";
 export default function ReportHotspot() {
   const navigate = useNavigate();
 
-/*  Retrieve the location selected on the map from the Redux store.
-    Redux was chosen so the selected coordinates can be shared between the map page 
-    and the hotspot reporting page without needing to pass data through multiple components */
+/*  Retrieve the username and location selected on the map from the Redux store.
+    Redux was chosen so the data can be shared between pages without needing to pass data through multiple components */
 
   const selectedLocation = useSelector(
     (state) => state.location.selectedLocation,
@@ -17,14 +16,30 @@ export default function ReportHotspot() {
   const lat = selectedLocation?.lat;
   const lng = selectedLocation?.lng;
 
+  const currentUser = useSelector((state) => state.auth.currentUser);
+
+  const username =
+    currentUser?.username ||
+    currentUser?.name ||
+    currentUser?.email ||
+    "";
+
 /* useState is used to manage form input values.
    This allows React to track user input and update the form dynamically */
 
-  const [username, setUsername] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
   const [litterType, setLitterType] = useState("");
   const [severity, setSeverity] = useState("");
+
+/* When the selected map location changes, useEffect automatically updates the 
+   address field with the current coordinates. */
+
+  useEffect(() => {
+    if (lat && lng) {
+      setAddress(`${lat.toFixed(5)}, ${lng.toFixed(5)}`);
+    }
+  }, [lat, lng]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -89,23 +104,23 @@ export default function ReportHotspot() {
         className="report-hotspot-form"
       >
         
-        <label htmlFor="username">User Name</label>
+        <label htmlFor="username">Username</label>
         <input
-          placeholder="<<Username should pre-populate>>"
+          id="username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
+          readOnly
         />
 
         <label htmlFor="description">Description of Hotspot</label>
         <textarea
+          id="description"
           placeholder="Description"
           value={description}
           onChange={(e) => {
             setDescription(e.target.value);
             e.target.style.height = "auto";
             e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
+          }}
           maxLength={200}
           required
         />
@@ -114,16 +129,13 @@ export default function ReportHotspot() {
             {description.length}/200 characters
         </p>
 
-        <label htmlFor="address">Address</label>
+        <label htmlFor="address">Location</label>
         <input
-          placeholder="Enter address"
+          id="address"
+          placeholder="Selected location"
           value={address}
-          onChange={(e) => {
-            setAddress(e.target.value);
-            e.target.style.height = "auto";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
           maxLength={100}
+          readOnly
           required
         />
 
@@ -183,9 +195,8 @@ export default function ReportHotspot() {
          </div>
         </fieldset>
 
-        <label htmlFor="photo">Upload photo (optional)</label>
-          
-          <input
+          <label htmlFor="photo">Upload photo (optional)</label>
+            <input
             id="photo"
             type="file"
             accept="image/*"
