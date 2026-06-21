@@ -75,7 +75,13 @@ export default function ReportHotspot() {
       },
       body: JSON.stringify(formData),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to create hotspot");
+        }
+        return res.json();
+      })
+
       .then((data) => {
         console.log("Hotspot created:", data);
 
@@ -89,6 +95,9 @@ export default function ReportHotspot() {
       })
       .catch((err) => {
         console.error("Error creating hotspot:", err);
+        alert(
+          "Unable to create hotspot. Please try again."
+        );
       });
   }
 
