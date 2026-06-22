@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import getHotspotsData from "./getHotspotsData";
 
 //Fetches hotspots data on mount and shows loading/error for user feedback
 export default function useHotspots () {
@@ -7,17 +8,9 @@ export default function useHotspots () {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const getHotspotsData = async () => {
+        const loadHotspots = async () => {
             try {
-                const response = await fetch("http://localhost:3001/api/hotspots", {
-                method: "GET",
-                });
-
-                if(!response.ok) {
-                    throw new Error(`Request failed: ${response.status}`)
-                }
-
-                const data = await response.json();
+                const data = await getHotspotsData()
                 setHotspots(data);
             } catch (err) {
                 setError(err.message)
@@ -26,7 +19,7 @@ export default function useHotspots () {
             setLoading(false);  
             };
     
-        getHotspotsData();
+        loadHotspots();
     }, []);
 
     return {hotspots, loading, error}
