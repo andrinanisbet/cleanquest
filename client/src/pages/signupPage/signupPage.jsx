@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import styles from "./signupPage.module.css";
+import validateSignupInput from "./validateSignupInput";
 
 
 export default function SignupPage () {
@@ -13,21 +14,14 @@ export default function SignupPage () {
     const navigate = useNavigate();
 
     const handleCreateAccount = async () => {
-        if (!username || !email || !password) {
-            setSignupMessage("Please enter a username, email and password")
-            return;
+
+        const signupValidationResult = validateSignupInput(username, email, password, confirmPassword)
+
+        if (signupValidationResult){
+            setSignupMessage(signupValidationResult)
+            return
         }
 
-
-        if (!confirmPassword) {
-            setSignupMessage("Please confirm your password")
-            return;
-        }
-
-        if (password !== confirmPassword){
-            setSignupMessage("Passwords do not match")
-            return;
-        }
         try {
             const response = await fetch ("http://localhost:3001/api/auth/signup", {
             method: "POST",

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../store/authSlice";
 import Button from "../../components/Button/Button";
 import styles from "./loginPage.module.css";
+import validateLoginInput from "./validateLoginInput";
 
 export default function LoginPage () {
     const [email, setEmail] = useState("");
@@ -14,10 +15,13 @@ export default function LoginPage () {
 
     const handleLogin = async () => {
 
-        if (!email || !password) {
-            setLoginMessage("Please enter email and password")
-            return;
+        const loginValidationResult = validateLoginInput(email, password);
+
+        if (loginValidationResult) {
+            setLoginMessage(loginValidationResult)
+            return
         }
+
         try {
             const response = await fetch("http://localhost:3001/api/auth/login", {
             method: "POST",
