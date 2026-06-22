@@ -76,9 +76,15 @@ app.post("/api/auth/signup", async (req, res) => {
 
   db.query(sql, [username, email, hashedPassword], (err, result) => {
     if (err) {
-      return res.status(500).json({
-        message: "Signup failed",
+      if (err.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({
+        message: "Username or email address already in use, please pick another",
         error: err,
+      });
+      }
+      return res.status(500).json({
+          message: "Signup failed",
+          error: err,
       });
     }
 
