@@ -13,23 +13,40 @@ export default function SignupPage () {
     const navigate = useNavigate();
 
     const handleCreateAccount = async () => {
+        if (!username || !email || !password) {
+            setSignupMessage("Please enter a username, email and password")
+            return;
+        }
+
+
+        if (!confirmPassword) {
+            setSignupMessage("Please confirm your password")
+            return;
+        }
+
         if (password !== confirmPassword){
             setSignupMessage("Passwords do not match")
             return;
         }
-        const response = await fetch ("http://localhost:3001/api/auth/signup", {
+        try {
+            const response = await fetch ("http://localhost:3001/api/auth/signup", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({username, email, password})
-        });
+            });
 
-        const data = await response.json()
+            const data = await response.json()
 
-        if (response.status === 201){
-            setSignupMessage("Sign up successful")
-            navigate("/login");
-        } else {
-            setSignupMessage(data.message || "Signup failed");
+            if (response.ok){
+                setSignupMessage("Sign up successful")
+                navigate("/login");
+            } else {
+                setSignupMessage(data.message || "Signup failed");
+            }
+
+        } catch (error) {
+            setSignupMessage("Unable to complete sign up, please check your connection and try again")
+            console.error(error.message)
         }
     }
 
