@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../store/authSlice";
 import Button from "../../components/Button/Button";
 import styles from "./loginPage.module.css";
+import validateLoginInput from "./validateLoginInput";
 
 export default function LoginPage () {
     const [email, setEmail] = useState("");
@@ -13,24 +14,38 @@ export default function LoginPage () {
     const dispatch = useDispatch();
 
     const handleLogin = async () => {
-        const response = await fetch("http://localhost:3001/api/auth/login", {
+
+        const loginValidationResult = validateLoginInput(email, password);
+
+        if (loginValidationResult) {
+            setLoginMessage(loginValidationResult)
+            return
+        }
+
+        try {
+            const response = await fetch("http://localhost:3001/api/auth/login", {
             method: "POST",
             headers: {"Content-Type": "application/json"}, 
             body: JSON.stringify({email, password})
-        });
+            });
 
-        const data = await response.json()
+            const data = await response.json()
 
-        if (response.status === 200) {
-            localStorage.setItem("token", data.token);
-            dispatch(setCurrentUser(data.user));
-            navigate("/home");
+            if (response.ok) {
+                localStorage.setItem("token", data.token);
+                dispatch(setCurrentUser(data.user));
+                navigate("/home");
+            } else {
+                setLoginMessage(data.message || "Login failed, please check your email and password");
+            }
 
-        } else {
-            setLoginMessage(data.message || "Login failed");
+            } catch (error) {
+                setLoginMessage("Unable to login, please check your connection and try again")
+                console.error(error.message)
+
         }
-
     }
+
 
     return(
         <div className={styles.loginPage}>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import styles from "./signupPage.module.css";
+import validateSignupInput from "./validateSignupInput";
 
 
 export default function SignupPage () {
@@ -13,23 +14,33 @@ export default function SignupPage () {
     const navigate = useNavigate();
 
     const handleCreateAccount = async () => {
-        if (password !== confirmPassword){
-            setSignupMessage("Passwords do not match")
-            return;
+
+        const signupValidationResult = validateSignupInput(username, email, password, confirmPassword)
+
+        if (signupValidationResult){
+            setSignupMessage(signupValidationResult)
+            return
         }
-        const response = await fetch ("http://localhost:3001/api/auth/signup", {
+
+        try {
+            const response = await fetch ("http://localhost:3001/api/auth/signup", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({username, email, password})
-        });
+            });
 
-        const data = await response.json()
+            const data = await response.json()
 
-        if (response.status === 201){
-            setSignupMessage("Sign up successful")
-            navigate("/login");
-        } else {
-            setSignupMessage(data.message || "Signup failed");
+            if (response.ok){
+                setSignupMessage("Sign up successful")
+                navigate("/login");
+            } else {
+                setSignupMessage(data.message || "Signup failed");
+            }
+
+        } catch (error) {
+            setSignupMessage("Unable to complete sign up, please check your connection and try again")
+            console.error(error.message)
         }
     }
 

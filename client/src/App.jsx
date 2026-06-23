@@ -13,31 +13,24 @@ import NavigationBar from "./components/NavigationBar/NavBar";
 import ReportHotspot from "./pages/reportHotspotPage/reportHotspot";
 import Leaderboard from "./pages/leaderboardPage/leaderboard";
 import ProfilePage from "./pages/profilePage/profilePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   usePersistAuth();
-  const currentUser = useSelector((state) => state.auth.currentUser)
 
   return (
     <div>
       <NavigationBar />
 
       <Routes>
-        // Show Home for authenticated users, otherwise show Login
-        <Route 
-          path="/" 
-          element={
-            !currentUser
-            ? <LoginPage />
-            : <Home />
-          }/>
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/map" element={<MapPage />} />
-        <Route path="/report-hotspot" element={<ReportHotspot />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/map" element={<ProtectedRoute><MapPage /></ProtectedRoute>} />
+        <Route path="/report-hotspot" element={<ProtectedRoute><ReportHotspot /></ProtectedRoute>} />
+        <Route path="/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
         <Route path="/signup" element={<SignupPage/>}/>
-        <Route path="/profile" element={<ProfilePage/>}/>
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>}/>
       </Routes>
     </div>
   );

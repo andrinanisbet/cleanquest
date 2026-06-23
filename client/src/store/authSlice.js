@@ -4,6 +4,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     currentUser: null,
+    isCheckingAuth: true,
   },
   reducers: {
     setCurrentUser: (state, action) => {
@@ -12,10 +13,13 @@ const authSlice = createSlice({
     clearCurrentUser: (state) => {
       state.currentUser = null;
     },
+    setIsCheckingAuth: (state) => {
+      state.isCheckingAuth = false; 
+    }
   },
 });
 
-export const { setCurrentUser, clearCurrentUser } =
+export const { setCurrentUser, clearCurrentUser, setIsCheckingAuth } =
   authSlice.actions;
 
 export default authSlice.reducer;
