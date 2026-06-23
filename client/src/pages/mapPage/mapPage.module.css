@@ -6,3 +6,127 @@
   padding: 9px 13px;
   border-radius: 10px;
 }
+
+.hotspotsList {
+  width: 90%;
+  max-width: 700px;
+  margin: 30px auto;
+}
+
+.hotspotsList h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.hotspotItem {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.hotspotItem:hover {
+  transform: translateY(-3px);
+}
+
+.hotspotImage {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.hotspotItem h5 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.hotspotItem p {
+  margin: 8px 0;
+  color: #444;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #d4edda;
+  color: #155724;
+  font-size: 14px;
+}
+
+.hotspotItem button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #238c3e;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.hotspotItem button:hover {
+  background: #10611b;
+}
+
+.mapHeader {
+  text-align: center;
+  padding: 25px 30px;
+  background: linear-gradient(135deg, #e8f5e9, #ffffff);
+  border-radius: 0 0 25px 25px;
+  margin-bottom: 30px;
+}
+
+.mapHeader h1 {
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #1b5e20;
+}
+
+.introText {
+  font-size: 18px;
+  color: #555;
+  max-width: 600px;
+  margin: 0 auto 25px;
+}
+
+.instructions {
+  background: white;
+  max-width: 600px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 15px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+
+  text-align: left;
+}
+
+.instructions h2 {
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
+
+.instructions ul {
+  text-align: center;
+  padding-left: 25px;
+  margin-bottom: 20px;
+}
+
+.instructions li {
+  margin: 12px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
