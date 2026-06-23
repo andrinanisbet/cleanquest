@@ -9,8 +9,8 @@ import "leaflet/dist/leaflet.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedLocation } from "../store/locationSlice";
-import { setCurrentUser } from "../store/authSlice";
+import { setSelectedLocation } from "../../store/locationSlice";
+import { setCurrentUser } from "../../store/authSlice";
 import { useLocation } from "react-router-dom";
 
 /* Click Handler */
@@ -26,7 +26,6 @@ function MapClickHandler() {
       dispatch(setSelectedLocation(coords));
     },
   });
-
   return null;
 }
 
@@ -86,12 +85,15 @@ export default function Map({ center }) {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`http://localhost:3001/api/hotspots/${id}/clean`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `http://localhost:3001/api/hotspots/${id}/clean`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       if (!res.ok) throw new Error("Request failed");
 
@@ -134,8 +136,9 @@ export default function Map({ center }) {
           {banner}
         </div>
       )}
+
       <MapContainer
-        center={center || [51.75, -2.22]}
+        center={center}
         zoom={13}
         style={{ height: "80vh", width: "100%" }}
       >
@@ -145,7 +148,6 @@ export default function Map({ center }) {
         />
 
         <MapClickHandler />
-
         {/* Temporary click marker */}
         {selectedLocation && (
           <Marker position={[selectedLocation.lat, selectedLocation.lng]}>
@@ -165,7 +167,6 @@ export default function Map({ center }) {
             </Popup>
           </Marker>
         )}
-
         {/* Hotspots*/}
         {hotspots
           .filter((spot) => spot.status !== "cleaned")
