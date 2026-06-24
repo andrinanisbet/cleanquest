@@ -32,8 +32,7 @@ export default function SignupPage () {
             const data = await response.json()
 
             if (response.ok){
-                setSignupMessage("Sign up successful")
-                navigate("/login");
+                navigate("/login", {state: {banner: true}});
             } else {
                 setSignupMessage(data.message || "Signup failed");
             }
