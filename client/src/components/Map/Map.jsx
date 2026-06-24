@@ -180,6 +180,8 @@ export default function Map({ center }) {
                   <h3>{spot.username}</h3>
                   <p>{spot.address}</p>
                   <p>{spot.description}</p>
+                  <p>Type: {spot.liiter_type}</p>
+                  <p>Severity: {spot.severity}</p>
 
                   <button onClick={() => markCleaned(spot.id)}>
                     Mark as cleaned
