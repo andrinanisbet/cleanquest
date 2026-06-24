@@ -1,3 +1,4 @@
+/* Main card container for the user's cleanup streak */
 .card {
     background: #238c3e;
     color: white;
@@ -7,6 +8,7 @@
     margin-bottom: 16px;
 }
 
+/* Row that displays the fire icon and streak number */
 .topLine {
     display: flex;
     justify-content: center;
@@ -14,22 +16,26 @@
     gap: 14px;
 }
 
+/* Fire icon styling */
 .fire {
     font-size: 42px;
 }
 
+/* Large streak number */
 .number {
     font-size: 48px;
     font-weight: 900;
     line-height: 1;
 }
 
+/* Card label text */
 .label {
     font-size: 24px;
     font-weight: 900;
     margin: 28px 0 18px;
 }
 
+/* Motivational message under the label */
 .motivation {
     color: #d7f2dd;
     font-size: 18px;

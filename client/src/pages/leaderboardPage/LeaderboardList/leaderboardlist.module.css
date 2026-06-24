@@ -1,7 +1,9 @@
+/* Wrapper for the leaderboard section */
 .wrapper {
     margin-top: 24px;
 }
 
+/* Leaderboard section heading */
 .wrapper h2 {
     color: #238c3e;
     font-size: 30px;
@@ -9,6 +11,7 @@
     margin: 0 0 18px;
 }
 
+/* Container for the leaderboard rows */
 .leaderboardList {
     background: #75b886;
     border-radius: 28px;
