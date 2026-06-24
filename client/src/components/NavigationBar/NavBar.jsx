@@ -7,37 +7,32 @@ export default function NavigationBar() {
 
   return (
     <nav className={styles.navbar}>
-      <NavLink
-        to="/home"
-        className={({ isActive }) => (isActive ? styles.activeLink : "")}
-      >
+      {currentUser ? (
+        <NavLink to="/home" className={({ isActive }) => (isActive ? styles.activeLink : "")}>
         Home
-      </NavLink>
-      <NavLink
-        to="/map"
-        className={({ isActive }) => (isActive ? styles.activeLink : "")}
-      >
-        Map
-      </NavLink>
+      </NavLink>) : null }
 
-      <NavLink
-        to="/leaderboard"
-        className={({ isActive }) => (isActive ? styles.activeLink : "")}
-      >
+      {currentUser ? (
+        <NavLink
+        to="/map" className={({ isActive }) => (isActive ? styles.activeLink : "")}>
+        Map
+       </NavLink>) : null }
+
+      {currentUser ? (
+        <NavLink
+        to="/leaderboard" className={({ isActive }) => (isActive ? styles.activeLink : "")}>
         Leaderboard
-      </NavLink>
+      </NavLink>) : null}
             
-      {
-        currentUser ? (
-            <NavLink to="/profile" className={styles.profileAvatar}> 
+      {currentUser ? (
+        <NavLink to="/profile" className={styles.profileAvatar}> 
                 {currentUser.username.charAt(0).toUpperCase()}
-            </NavLink>
+        </NavLink>
         ) : (
             <NavLink to="/login"> 
                 Login
             </NavLink>
-        )
-            
+        )  
         } 
     </nav>
   );

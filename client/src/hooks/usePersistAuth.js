@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setCurrentUser, clearCurrentUser } from "../store/authSlice";
+import { setCurrentUser, clearCurrentUser, setIsCheckingAuth } from "../store/authSlice";
 
 export default function usePersistAuth () {
 const dispatch = useDispatch();
@@ -10,6 +10,7 @@ const dispatch = useDispatch();
 
     if(!token){
       dispatch(clearCurrentUser());
+      dispatch(setIsCheckingAuth());
       return;
     }
 
@@ -25,15 +26,18 @@ const dispatch = useDispatch();
           const data = await response.json();
 
           if (response.ok){
-            dispatch(setCurrentUser(data.user))
+            dispatch(setCurrentUser(data.user));
+            dispatch(setIsCheckingAuth());
           } else {
               localStorage.removeItem("token");
               dispatch(clearCurrentUser());
+              dispatch(setIsCheckingAuth());
             }
 
       } catch (error) {
             localStorage.removeItem("token");
             dispatch(clearCurrentUser());
+            dispatch(setIsCheckingAuth());
       }
     }
 

@@ -76,6 +76,13 @@ app.post("/api/auth/signup", async (req, res) => {
 
   db.query(sql, [username, email, hashedPassword], (err, result) => {
     if (err) {
+      if (err.code === "ER_DUP_ENTRY") {
+        return res.status(409).json({
+          message:
+            "Username or email address already in use, please pick another",
+          error: err,
+        });
+      }
       return res.status(500).json({
         message: "Signup failed",
         error: err,
@@ -203,31 +210,46 @@ app.get("/leaderboard", (req, res) => {
       console.error("Leaderboard error:", err);
       return res.status(500).json({ error: "Failed to fetch leaderboard" });
     }
-    
+
     res.json(results);
   });
 });
 
 // Route to add hotspot
 app.post("/api/hotspots", (req, res) => {
-  const { username, lat, lng, description, status, address } = req.body;
+  console.log("Hotspot data:", req.body);
+  const {
+    username,
+    lat,
+    lng,
+    description,
+    litterType,
+    severity,
+    status,
+    address,
+  } = req.body;
 
   const sql = `
-    INSERT INTO hotspots (username, lat, lng, description, status, address)
-VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO hotspots (username, lat, lng, description, litter_type, severity, status, address)
+VALUES (?, ?, ?, ?, ?, ?,?,?)
   `;
 
   db.query(
     sql,
-    [username, lat, lng, description, status, address],
+    [username, lat, lng, description, litterType, severity, status, address],
     (err, result) => {
-      if (err) return res.status(500).json(err);
-
+      if (err) {
+        console.error("Hotspot insert error", err);
+        return res.status(500).json(err);
+      }
       res.json({
         id: result.insertId,
+        username,
         lat,
         lng,
         description,
+        litterType,
+        severity,
         status,
         address,
       });
@@ -250,11 +272,11 @@ app.get("/api/hotspots", (req, res) => {
   });
 });
 
-//Helper function 
+//Helper function
 function awardCleanupPoints(userId, pointsToAdd, callback) {
   console.log("Awarding points to user:", userId);
   console.log("Points to add:", pointsToAdd);
-  
+
   const sql = `
     UPDATE users
     SET
@@ -264,7 +286,7 @@ function awardCleanupPoints(userId, pointsToAdd, callback) {
     WHERE user_id = ?
     `;
 
-    db.query(sql, [pointsToAdd, userId], callback);
+  db.query(sql, [pointsToAdd, userId], callback);
 }
 
 // Route to update hotspot and award user points
@@ -291,7 +313,7 @@ app.put("/api/hotspots/:id/clean", authMiddleware, (req, res) => {
         error: err,
       });
     }
-    
+
     if (result.affectedRows === 0) {
       return res.status(404).json({
         message: "Hotspot not found",
