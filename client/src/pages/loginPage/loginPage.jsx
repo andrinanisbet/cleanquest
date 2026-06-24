@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../store/authSlice";
 import Button from "../../components/Button/Button";
@@ -10,8 +10,19 @@ export default function LoginPage () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginMessage, setLoginMessage] = useState("");
+    const [banner, setBanner] = useState("")
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+
+    useEffect (() => {
+        if(location.state?.banner) {
+
+            setBanner("Sign up successful, please login")
+            setTimeout(() => setBanner(""), 2000); 
+        }
+        
+    },[])
 
     const handleLogin = async () => {
 
@@ -46,9 +57,9 @@ export default function LoginPage () {
         }
     }
 
-
     return(
         <div className={styles.loginPage}>
+            {banner && (<div className={styles.banner}>{banner}</div>)}
             <section className={styles.loginCard}>
                 <h1>Welcome back</h1>
                 <p>Log in to continue your CleanQuest journey.</p>
