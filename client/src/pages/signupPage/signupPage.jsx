@@ -15,6 +15,7 @@ export default function SignupPage () {
 
     const handleCreateAccount = async () => {
 
+        // validation extracted to its own function to allow unit testing
         const signupValidationResult = validateSignupInput(username, email, password, confirmPassword)
 
         if (signupValidationResult){
@@ -32,11 +33,13 @@ export default function SignupPage () {
             const data = await response.json()
 
             if (response.ok){
+                // passes banner via navigation state, read by LoginPage to show a signup success message
                 navigate("/login", {state: {banner: true}});
             } else {
                 setSignupMessage(data.message || "Signup failed");
             }
 
+        // generic fallback message for network/connection failures
         } catch (error) {
             setSignupMessage("Unable to complete sign up, please check your connection and try again")
             console.error(error.message)
