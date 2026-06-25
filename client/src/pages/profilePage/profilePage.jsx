@@ -17,8 +17,8 @@ export default function ProfilePage (){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector((state) => state.auth.currentUser); 
-    const {leaderboard} = useLeaderboard();
-    const {hotspots} = useHotspots();
+    const {leaderboard, loading: leaderboardLoading} = useLeaderboard();
+    const {hotspots, loading: hotspotsLoading} = useHotspots();
 
 
     const currentPoints = currentUser?.points || 0;
@@ -43,7 +43,7 @@ export default function ProfilePage (){
     const hotspotsReported = userHotspots.length;
     const recentUserHotspots = userHotspots.slice(-3).reverse();
  
-    if(currentUser){
+    if(currentUser && !leaderboardLoading && !hotspotsLoading){
         return (
             <div className ={styles.profilePage}>
 
