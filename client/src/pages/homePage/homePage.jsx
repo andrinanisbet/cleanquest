@@ -13,8 +13,8 @@ export default function Home() {
     const currentUser = useSelector((state) => state.auth.currentUser);
     const userPoints = currentUser?.points || 0;
     const { level, title, progress } = getUserLevel(userPoints);
-    const { leaderboard } = useLeaderboard();
-    const { hotspots } = useHotspots();
+    const { leaderboard, loading: leaderboardLoading, error: leaderboardError } = useLeaderboard();
+    const { hotspots, loading: hotspotsLoading, error: hotspotsError } = useHotspots();
 
     const totalMembers = leaderboard.length;
     const hotspotsReported = hotspots.length;
@@ -23,8 +23,14 @@ export default function Home() {
         0)
     const topThreeLeaderboard = leaderboard.slice(0, 3)
 
+    if ((leaderboardError || hotspotsError)) {
+        return (<p>There was an error loading your dashboard</p>)
+    }
 
-    
+    if ((leaderboardLoading || hotspotsLoading)) {
+        return (<p>Loading data</p>)
+    }
+
     return (
          <div className ={styles.homePage}>
             <WelcomeCard username={currentUser?.username}/>
