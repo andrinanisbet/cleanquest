@@ -226,3 +226,5 @@ severity VARCHAR(20),
 status VARCHAR (20) DEFAULT 'To be cleaned',
 address VARCHAR (255)
 );
+
+SHOW TABLES;

@@ -1,3 +1,4 @@
+/* Main row layout for each leaderboard user */
 .row {
     display: grid;
     grid-template-columns: 44px 54px 120px 130px;
@@ -11,16 +12,19 @@
     margin-right: auto;
 }
 
+/* Remove bottom spacing from the last leaderboard row */
 .row:last-child {
     margin-bottom: 0;
 }
 
+/* User's leaderboard rank*/
 .rank {
     margin: 0;
     font-size: 22px;
     text-align: right;
 }
 
+/* Circular avatar showing the user's first initial */
 .avatar {
     width: 50px;
     height: 50px;
@@ -33,25 +37,30 @@
     font-weight: 900;
 }
 
+/* Username text */
 .name {
     margin: 0;
     font-size: 20px;
 }
 
+/* Container for the user's streak and points */
 .stats {
     text-align: left;
 }
 
+/* Shared styling for the streak and points text */
 .stats p {
     margin: 0;
     font-size: 15px;
     line-height: 1.25;
 }
 
+/* Cleanup streak text */
 .cleanups {
     color: #d7f2dd;
 }
 
+/* Points text */
 .points {
     color: #ffe600;
 }

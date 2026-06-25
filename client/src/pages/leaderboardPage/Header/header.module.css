@@ -1,3 +1,4 @@
+/* Main header container */
 .Header {
     border-radius: 28px;
     padding: 44px 24px;
@@ -7,6 +8,7 @@
     margin-bottom: 20px;
 }
 
+/* Main leaderboard title */
 .title {
     font-size: 34px;
     font-weight: 900;
@@ -14,6 +16,7 @@
     line-height: 1.1;
 }
 
+/* Subtitle text under the main title */
 .subtitle {
     font-size: 17px;
     font-weight: 700;
