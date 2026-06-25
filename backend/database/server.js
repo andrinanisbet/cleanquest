@@ -4,13 +4,31 @@ const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const path = require("path");
+
 
 const db = require("./config/db");
 
 const app = express();
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+ const upload = multer({ storage: storage });
+  
+
 app.use(cors());
 app.use(express.json());
+
+// server upload images
+app.use("/uploads", express.static("uploads"));
 
 //auth middleware
 function authMiddleware(req, res, next) {
@@ -216,8 +234,10 @@ app.get("/leaderboard", (req, res) => {
 });
 
 // Route to add hotspot
-app.post("/api/hotspots", (req, res) => {
+app.post("/api/hotspots", upload.single("image"), (req, res) => {
   console.log("Hotspot data:", req.body);
+  console.log("file,",req.file);
+
   const {
     username,
     lat,
@@ -229,14 +249,16 @@ app.post("/api/hotspots", (req, res) => {
     address,
   } = req.body;
 
+const image = req.file ? req.file.filename : null;
+
   const sql = `
-    INSERT INTO hotspots (username, lat, lng, description, litter_type, severity, status, address)
+    INSERT INTO hotspots (username, lat, lng, description, litter_type, severity, status, address,image)
 VALUES (?, ?, ?, ?, ?, ?,?,?)
   `;
 
   db.query(
     sql,
-    [username, lat, lng, description, litterType, severity, status, address],
+    [username, lat, lng, description, litterType, severity, status, address, image],
     (err, result) => {
       if (err) {
         console.error("Hotspot insert error", err);
@@ -252,6 +274,7 @@ VALUES (?, ?, ?, ?, ?, ?,?,?)
         severity,
         status,
         address,
+        image,
       });
     },
   );

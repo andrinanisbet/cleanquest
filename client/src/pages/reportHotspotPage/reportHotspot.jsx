@@ -54,16 +54,20 @@ export default function ReportHotspot() {
 /*  Form data is collected into a single object before being sent to the backend API. 
     This makes it easier to send the hotspot information as JSON */
 
-    const formData = {
-      username,
-      lat,
-      lng,
-      description,
-      address,
-      litterType,
-      severity,
-      status: "active",
-    };
+    const data = new FormData();
+    data.append("username", username);
+    data.append("lat", lat);
+    data.append("lng", lng);
+    data.append("description", description);
+    data.append("address", address);
+    data.append("litterType", litterType);
+    data.append("severity", severity);
+    data.append("status", "active");
+    
+
+    if (photo) {
+      data.append("image",photo);
+    }
 
 /*  The Fetch API is used to send hotspot data to the backend,
     where it can be stored in the SQL database and displayed on the map */
@@ -73,7 +77,7 @@ export default function ReportHotspot() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: data
     })
       .then((res) => {
         if (!res.ok) {
