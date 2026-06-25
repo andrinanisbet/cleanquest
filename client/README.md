@@ -83,7 +83,7 @@ Sarah Hull-
 
 Rose Day-
 
-Ria Raza- Participated in the creation of the Home, Profile and leaderboard pages. Created the navigation bar for users to access the different pages. Created the progress bar for users to see their progression through earning points. Created the leveling up system for the users progress when they earn points. Created the readme file with the description of CleanQuest, set-up instructions, and instructions on how to run the app.
+Ria Raza- Participated in creating the Home, Profile and leaderboard pages. Created the navigation bar for users to access the different pages. Created the progress bar for users to see their progression through earning points. Created the leveling up system for the users progress when they earn points. Created the readme file with the description of CleanQuest, set-up instructions, and instructions on how to run the app.
 
 Natasha Gaffney-
 
