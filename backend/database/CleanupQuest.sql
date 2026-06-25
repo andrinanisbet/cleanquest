@@ -224,7 +224,8 @@ description TEXT,
 litter_type VARCHAR(100),
 severity VARCHAR(20),
 status VARCHAR (20) DEFAULT 'To be cleaned',
-address VARCHAR (255)
+address VARCHAR (255),
+image VARCHAR(255)
 );
 
 SHOW TABLES;
