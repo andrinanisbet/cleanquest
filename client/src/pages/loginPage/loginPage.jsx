@@ -16,12 +16,16 @@ export default function LoginPage () {
     const location = useLocation();
 
     useEffect (() => {
-        if(location.state?.banner) {
-
-            setBanner("Sign up successful, please login")
-            setTimeout(() => setBanner(""), 2000); 
-        }
+        let timeoutId;
         
+        if(location.state?.banner) {
+            setBanner("Sign up successful, please login")
+            timeoutId = setTimeout(() => setBanner(""), 2000); 
+        };
+
+        return () => {
+            clearTimeout(timeoutId)
+        };
     },[])
 
     const handleLogin = async () => {
