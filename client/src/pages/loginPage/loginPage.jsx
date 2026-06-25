@@ -17,7 +17,9 @@ export default function LoginPage () {
 
     useEffect (() => {
         let timeoutId;
-        
+        //sign up redirects here with location.state.banner to show a success message
+        //cleanup cancels the timeout if the user navigates away before it fires,
+        //avoiding a state update on an unmounted component
         if(location.state?.banner) {
             setBanner("Sign up successful, please login")
             timeoutId = setTimeout(() => setBanner(""), 2000); 
@@ -26,10 +28,11 @@ export default function LoginPage () {
         return () => {
             clearTimeout(timeoutId)
         };
+    //empty dependency array instead of including location as this should only fire once after redirect  
     },[])
 
     const handleLogin = async () => {
-
+        // validation extracted to its own function to allow unit testing
         const loginValidationResult = validateLoginInput(email, password);
 
         if (loginValidationResult) {
@@ -54,6 +57,7 @@ export default function LoginPage () {
                 setLoginMessage(data.message || "Login failed, please check your email and password");
             }
 
+            // generic fallback message for network/connection failures
             } catch (error) {
                 setLoginMessage("Unable to login, please check your connection and try again")
                 console.error(error.message)
