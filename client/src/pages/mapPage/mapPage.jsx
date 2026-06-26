@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import Map from "../../components/Map/Map";
 import style from "./mapPage.module.css";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../store/authSlice";
 
 {
   /*This showcases the representation of the map page itself*/
 }
 export default function MapPage() {
   const [hotspots, setHotspots] = useState([]);
+  const dispatch = useDispatch();
 
   {
     /* Fetches the hotspots from the backend API*/
@@ -20,6 +23,26 @@ export default function MapPage() {
   {
     /* Marks a hotspot as cleaned then refreshes the list*/
   }
+  const refreshCurrentUser = async () => {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch("http://localhost:3001/api/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to refresh current user");
+    }
+
+    const data = await res.json();
+
+    console.log("Refreshed user after cleanup:", data.user);
+
+    dispatch(setCurrentUser(data.user));
+  };
+
   const markCleaned = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -39,6 +62,8 @@ export default function MapPage() {
       }
 
       await res.json();
+
+      await refreshCurrentUser();
 
       {
         /* Refresh the hotspots list after marking as cleaned */
