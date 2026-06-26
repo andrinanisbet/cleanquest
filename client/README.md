@@ -86,6 +86,29 @@ Rose Day-
 Ria Raza-
 
 Natasha Gaffney-
+>
+### Contribution to the Cleanup Quest Project
+>
+* Developed the Leaderboard feature using React components.
+>
+* Built reusable components including the Leaderboard page, LeaderboardList, and LeaderboardRow.
+>
+* Integrated the frontend with the Express backend to retrieve leaderboard data from the MySQL database.
+>
+* Implemented API data fetching using `fetch()`, `useEffect`, and `useState`.
+>
+* Displayed and sorted users dynamically based on their points.
+>
+* Assisted with integrating React Router for navigation.
+>
+* Began migrating the leaderboard feature from JavaScript to TypeScript by creating types and adding type 
+annotations.
+>
+* Debugged frontend, backend, routing, and API integration 
+issues.
+>
+* Collaborated with the team using Git and GitHub, including resolving merge conflicts and integrating changes from the main branch.
+
 
 Caroline Karanja-
 
