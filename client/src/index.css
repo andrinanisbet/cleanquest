@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
 .leaflet-popup-content {
   color: black !important;
   background: white;
@@ -13,4 +15,9 @@
   background: white;
   color: black;
   cursor: pointer;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
 }
