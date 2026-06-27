@@ -13,7 +13,7 @@ export default function RecentHotspotsCard ({recentUserHotspots}) {
                 <div key={hotspot.id} className={styles.hotspotCard}>
                 Description: {hotspot.description}
                 <br />
-                Address: {hotspot.address}
+                Location: {hotspot.address}
                 </div>
             ))}
             </div>
