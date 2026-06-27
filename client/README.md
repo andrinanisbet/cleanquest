@@ -17,7 +17,7 @@ First clone the GitHub repository
 
 #### Step 2-
 
-Then navigate to the **frontend** of the project `cd client`, and install the dependencies using `np install`.
+Then navigate to the **frontend** of the project `cd client`, and install the dependencies using `npm install`.
 
 These are the depencencies you will be installing from the frontend:
 
@@ -64,15 +64,15 @@ To allow the server in the backend to run, you will need navigate to the `backen
 - backend server port `PORT=3001`
 - Database settings:
   `DB_HOST=localhost
-  DB_USER='your own username'
-  DB_PASSWORD='your own password'
-  DB_NAME=cleanup_quest`
+DB_USER='your own username'
+DB_PASSWORD='your own password'
+DB_NAME=cleanup_quest`
 - JWT secret used for signing tokens:
   `JWT_SECRET=add_your_secret_here`.
 
 #### Step 5-
 
-Create the SQL `CleanupQuest.sql` database from the backend in a platform like DBeaver.
+Create the SQL `CleanupQuest.sql` database from the backend in a platform like DBeaver.After importing the database, make sure MySQL is running before starting the backend server.
 
 ## Running The App
 
@@ -107,7 +107,6 @@ Sarah Hull-
 - Set up Vitest and wrote unit tests for the auth slice, location slice, getHotspotsData, and validation for sign up and login.
   >
 - Debugged issues across the frontend, backend, routing, database, and API.
-
 
 Rose Day-
 
