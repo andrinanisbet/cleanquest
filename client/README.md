@@ -99,6 +99,7 @@ To start using CleanQuest create an account by selecting **sign up**. Once you s
 - Built the backend authentication system, including JWT-based login, bcrypt, password hashing, and the MySQL auth routes (signup, login, current user).
 - Created the ProtectedRoute component to guard authenticated pages.
 - Built the usePersistAuth hook to keep users logged in across page refreshes.
+- Built the Redux auth slice to manage global authentication state and session persistence across the app.
 - Built the Login, Signup pages.
 - Built the Home dashboard and Profile pages in collaboration with Ria.
 - Extracted reusable custom hooks (useLeaderboard, useHotspots) and shared components (Card, WelcomeCard, EcoLevelCard, ProfileHeader and others) to refactor the Homepage and ProfilePage.
