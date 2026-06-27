@@ -117,16 +117,15 @@ To start using CleanQuest create an account by selecting **sign up**. Once you s
 - Created hotspot listing functionality.
 - Implemented Redux for global state management and created location slices.
 
-### Ria Raza- 
+### Ria Raza-
 
 - Participated in styling of the Homepage, Profile page and leaderboard page.
 - Designed and implemented the navigation bar to improve usability and streamline navigation to different pages of the app.
-- Developed a progress bar to provide visual user feedback and support gamification features. 
+- Developed a progress bar to provide visual user feedback and support gamification features.
 - Created the leveling-up system in the front-end to track user achievement and encourage engagement.
 - Cleared up backend database of unused tables to maintain database hygiene.
 - Collaborated to resolve merge conflicts.
 - Completed the readme file with the description of CleanQuest, set-up instructions, and instructions on how to run the app.
-
 
 ### Natasha Gaffney-
 
@@ -143,10 +142,13 @@ To start using CleanQuest create an account by selecting **sign up**. Once you s
 - Collaborated with the team using Git and GitHub, including resolving merge conflicts and integrating changes from the main branch.
 
 ### Caroline Karanja-
-- 
-- 
-- 
-- 
+
+- Implemented image upload functionality for hotspot reports using Multer.
+- Updated the hotspot reporting form to support image uploads using FormData.
+- Modified the backend to store uploaded images and save image references in the database.
+- Updated the map page to display uploaded hotspot images.
+- Added static file serving for uploaded images and installed the required project dependencies.
+- Assisted with frontend improvements and testing of the image upload feature.
 
 ### Andrina Nisbet-
 
