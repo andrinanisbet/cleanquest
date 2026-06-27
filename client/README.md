@@ -94,6 +94,21 @@ To start using CleanQuest create an account by selecting **sign up**. Once you s
 
 Sarah Hull-
 
+- Built the backend authentication system, including JWT-based login, bcrypt, password hashing, and the MySQL auth routes (signup, login, current user).
+  >
+- Created the ProtectedRoute component to guard authenticated pages.
+  >
+- Built the usePersistAuth hook to keep users logged in across page refreshes.
+  >
+- Built the Login, Signup, Home dashboard and Profile pages.
+  >
+- Extracted reusable custom hooks (useLeaderboard, useHotspots) and shared components (Card, WelcomeCard, EcoLevelCard, ProfileHeader and others) to refactor the Homepage and ProfilePage.
+  >
+- Set up Vitest and wrote unit tests for the auth slice, location slice, getHotspotsData, and validation for sign up and login.
+  >
+- Debugged issues across the frontend, backend, routing, database, and API.
+
+
 Rose Day-
 
 - Created the map page component to provide the main interface.
