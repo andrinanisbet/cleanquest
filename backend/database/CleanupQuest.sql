@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS cleanup_quest;
+
 USE cleanup_quest;
 
 CREATE TABLE users (
