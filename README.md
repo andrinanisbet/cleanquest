@@ -33,4 +33,4 @@ Hi, my name is Caroline Karanja and i will be working on the map page of this ap
 >
 Andrina Nisbet:
 
-Hi, my name is Andrina and I will be working on the event creation page of this application. In my spare time I enjoy hiking, running, strength training, knitting and exploring the outdoors with my dog, Timmy. I also love travelling and experiencing different cultures around the world.
+Hi, my name is Andrina and I will be working on the hotspot report page of this application. In my spare time I enjoy hiking, running, strength training, knitting and exploring the outdoors with my dog, Timmy. I also love travelling and experiencing different cultures around the world.
