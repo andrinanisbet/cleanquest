@@ -129,7 +129,21 @@ Rose Day-
   >
 - Implemented Redux for global state management and created location slices.
 
-Ria Raza- Participated in creating the Home, Profile and leaderboard pages. Created the navigation bar for users to access the different pages. Created the progress bar for users to see their progression through earning points. Created the leveling up system for the users progress when they earn points. Created the readme file with the description of CleanQuest, set-up instructions, and instructions on how to run the app.
+
+Ria Raza- 
+> 
+- Participated in styling of the Homepage, Profile page and leaderboard page.
+>
+- Designed and implemented the navigation bar to improve usability and streamline navigation to different pages of the app.
+>
+- Developed a progress bar to provide visual user feedback and support gamification features. 
+>
+- Created the leveling-up system in the front-end to track user achievement and encourage engagement.
+>
+- Collaborated to resolve merge conflicts.
+>
+- Completed the readme file with the description of CleanQuest, set-up instructions, and instructions on how to run the app.
+
 
 Natasha Gaffney-
 
