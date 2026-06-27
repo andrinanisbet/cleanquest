@@ -44,6 +44,7 @@ export default function ReportHotspot() {
 
     /*  Validation is performed before submission to ensure
     a hotspot cannot be created without a location selected on the map.*/
+
     if (!lat || !lng) {
       alert("No map location selected.");
       return;
@@ -68,6 +69,7 @@ export default function ReportHotspot() {
 
     /*  The Fetch API is used to send hotspot data to the backend,
     where it can be stored in the SQL database and displayed on the map */
+
     const token = localStorage.getItem("token");
     fetch("http://localhost:3001/api/hotspots", {
       method: "POST",
@@ -114,7 +116,7 @@ export default function ReportHotspot() {
           <label htmlFor="description">Description of Hotspot</label>
           <textarea
             id="description"
-            placeholder="Description"
+            placeholder="Describe the issue. For example, overflowing bin at the corner of High Street and Main Road"
             value={description}
             onChange={(e) => {
               setDescription(e.target.value);
