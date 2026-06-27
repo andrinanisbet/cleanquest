@@ -17,9 +17,8 @@ export default function ProfilePage (){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector((state) => state.auth.currentUser); 
-    const {leaderboard} = useLeaderboard();
-    const {hotspots} = useHotspots();
-
+    const {leaderboard, loading: leaderboardLoading} = useLeaderboard();
+    const {hotspots, loading: hotspotsLoading} = useHotspots();
 
     const currentPoints = currentUser?.points || 0;
     const { level, title, progress, pointsToNextLevel } = getUserLevel(currentPoints);
@@ -30,20 +29,26 @@ export default function ProfilePage (){
         navigate("/");
     }
 
-
+    // +1 converts 0-based index into a user friendly rank
+    // findIndex can briefly return -1 before currentUser or leaderboard have loaded,
+    // but the guard at the bottom of the file ensures this value is never rendered until both are ready
     const userRank = 
         leaderboard.findIndex(
             (user) => user.user_id === currentUser?.user_id
         )+1; 
 
+    // filtering by username rather than user_id, as the hotspots table in the database
+    // only stores username and has no foreign key relationship to users.user_id 
     const userHotspots = hotspots.filter(
         (hotspot) => hotspot.username === currentUser?.username
     );
 
     const hotspotsReported = userHotspots.length;
     const recentUserHotspots = userHotspots.slice(-3).reverse();
- 
-    if(currentUser){
+
+    // renders only once user, leaderboard, and hotspots have all loaded
+    // this ensures userRank (and the other stats) are never displayed before they reflect complete, accurate data
+    if(currentUser && !leaderboardLoading && !hotspotsLoading){
         return (
             <div className ={styles.profilePage}>
 

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 
-// Fetches leaderboard data on mount and shows loading/error state for user feedback
 export default function useLeaderboard () {
     const [leaderboard, setLeaderboard] = useState([]);
+    // loading and error are exposed so Home and ProfilePage can show feedback during the fetch
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        //not extracted to its own file as with getHotspotsData, this was to allow testing for getHotspotsData
         const getLeaderboardData = async () => {
             try {
                 const response = await fetch("http://localhost:3001/leaderboard", {
@@ -22,7 +23,7 @@ export default function useLeaderboard () {
                 setError(err.message);
             }
 
-            // Runs after success or failure
+            // Runs after success or failure, so loading is always set to false after fetch is complete
             setLoading(false);   
         };
 

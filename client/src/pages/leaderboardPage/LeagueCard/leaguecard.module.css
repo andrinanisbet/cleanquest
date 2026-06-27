@@ -1,3 +1,4 @@
+/* Main card container for the user's league progress */
 .card {
     background: #248f3d;
     color: white;
@@ -5,6 +6,7 @@
     padding: 28px 32px;
 }
 
+/* Text showing the user's next level */
 .nextLevel {
     margin-top: 4px;
     font-size: 14px;
@@ -13,6 +15,7 @@
     text-align: right;
 }
 
+/* Row that displays the current level and next level */
 .levelRow {
     display: flex;
     justify-content: space-between;
@@ -22,10 +25,12 @@
     font-weight: 800;
 }
 
+/* Removes default paragraph spacing inside the level row */
 .levelRow p {
     margin: 0;
 }
 
+/* Text showing how many points are needed to level up */
 .pointsText {
     margin: 10px 0 0;
     text-align: center;

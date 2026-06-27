@@ -15,6 +15,12 @@ export default function ProtectedRoute ({children}) {
 
     }, [isCheckingAuth, currentUser])
 
+    /*
+    while auth check is still loading, "Checking user data is rendered"
+    if auth check is complete and no user is logged in, "Please login" is rendered
+    if auth check is complete and user is logged in, the full page renders
+    */
+
     return isCheckingAuth ? <p>Checking user data</p> : !isCheckingAuth && !currentUser ? <p>Please login</p> : children
     
 
