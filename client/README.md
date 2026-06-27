@@ -13,7 +13,7 @@ To set up CleanQuest follow these steps:
 #### Step 1-
 
 First clone the GitHub repository
-`git clone`.
+`git clone https://github.com/carnicus871-png/cleanquest.git`.
 
 #### Step 2-
 
@@ -100,7 +100,9 @@ Sarah Hull-
   >
 - Built the usePersistAuth hook to keep users logged in across page refreshes.
   >
-- Built the Login, Signup, Home dashboard and Profile pages.
+- Built the Login, Signup pages.
+  >
+- Built the Home dashboard and Profile pages in collaboration with Ria.
   >
 - Extracted reusable custom hooks (useLeaderboard, useHotspots) and shared components (Card, WelcomeCard, EcoLevelCard, ProfileHeader and others) to refactor the Homepage and ProfilePage.
   >

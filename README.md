@@ -2,6 +2,8 @@
 
 A full-stack React application for cleaning up litter in the community.
 
+📌 **For setup instructions, running the app, and full team contributions, see [`client/README.md`](./client/README.md).**
+
 # About us
 
 Rose Day:
