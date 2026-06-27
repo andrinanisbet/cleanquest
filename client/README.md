@@ -140,6 +140,8 @@ Ria Raza-
 >
 - Created the leveling-up system in the front-end to track user achievement and encourage engagement.
 >
+- Cleared up backed database of unused tables to maintain database hygiene.
+> 
 - Collaborated to resolve merge conflicts.
 >
 - Completed the readme file with the description of CleanQuest, set-up instructions, and instructions on how to run the app.
